@@ -26,10 +26,11 @@ public class SplashActivity extends Activity {
         Intent intent;
         loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
         if (loginDatas.size() == 0) {
-            intent = new Intent (getApplicationContext(), LoginActivity.class);
+            intent = new Intent(getApplicationContext(), LoginActivity.class);
         } else {
-            intent = new Intent (getApplicationContext(), LmsActivity.class);
+            intent = new Intent(getApplicationContext(), LmsActivity.class);
         }
+
         startActivity(intent);
         finish();
     }

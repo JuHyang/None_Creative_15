@@ -7,15 +7,16 @@ import com.orm.SugarRecord;
  */
 
 public class LoginData extends SugarRecord<LoginData> {
-    String id;
+    String studentNum;
     String password;
 
-    public void LoginData () {
+
+    public LoginData () {
 
     }
 
-    public void LoginData (String id, String password) {
-        this.id = id;
+    public LoginData (String studentNum, String password) {
+        this.studentNum = studentNum;
         this.password = password;
     }
 }
