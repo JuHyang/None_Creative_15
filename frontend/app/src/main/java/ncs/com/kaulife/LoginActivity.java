@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
+
+import java.io.IOException;
+
+import retrofit2.Call;
 
 public class LoginActivity extends Activity {
     EditText editTextId;
@@ -41,15 +46,49 @@ public class LoginActivity extends Activity {
                 Boolean auto = switchAuto.isChecked();
                 if (auto) {
                     LoginData loginData = new LoginData(id, password);
-                    loginData.save();
+                    String loginjudge = Login(loginData);
+                    if (loginjudge.equals("1")) {
+                        loginData.save();
+                        startActivity(intent);
+                        finish();
+                    } else if (loginjudge.equals("0")) {
+                        Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "서버에 오류가 있습니다. 잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show();
+                    }
+
+
                 } else {
                     intent.putExtra("id", id);
                     intent.putExtra("password", password);
+                    LoginData loginData = new LoginData(id, password);
+                    String loginjudge = Login(loginData);
+                    if (loginjudge.equals("1")) {
+                        loginData.save();
+                        startActivity(intent);
+                        finish();
+                    } else if (loginjudge.equals("0")) {
+                        Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "서버에 오류가 있습니다. 잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show();
+                    }
                 }
-                startActivity(intent);
-                finish();
+
             }
         });
+    }
+
+    public String Login (LoginData loginData) {
+        String loginjudge = "";
+        ServerInterface serverInterface = new Repo().getService();
+        Call<String> c = serverInterface.LmsLogin(loginData);
+        try {
+            loginjudge = c.execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "-1";
+        }
+        return loginjudge;
     }
 
 }
