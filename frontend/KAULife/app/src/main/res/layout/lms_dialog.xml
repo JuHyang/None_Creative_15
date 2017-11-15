@@ -6,37 +6,36 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
-
+        tools:layout_editor_absoluteY="184dp">
         <TextView
-            android:id="@+id/textViewTime"
-            android:layout_width="match_parent"
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="textViewTime" />
+            android:text="기능을 사용하시려면 ON 으로 바꿔주세요"
+            android:textSize="20dp" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textViewSubject"
+            <ToggleButton
+                android:id="@+id/toggleAuto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginRight="50dp"
-                android:text="textViewSubject" />
+                android:text="on" />
 
-            <TextView
-                android:id="@+id/textViewContent"
+            <Button
+                android:id="@+id/btnLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="textViewContent" />
+                android:text="Logout" />
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

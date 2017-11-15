@@ -8,9 +8,10 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <permission android:name="android.permission.INTERNET" />
-    <!-- [END retrofit_permission] -->
 
+    <permission android:name="android.permission.INTERNET" />
+
+    <!-- [END retrofit_permission] -->
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
@@ -26,15 +27,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LmsActivity" />
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LoginActivity" />
 
         <!-- Start SugarOrm(DB) information -->
-        <meta-data android:name="DATABASE" android:value="KAULife.db" />
-        <meta-data android:name="VERSION" android:value="2" />
-        <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="ncs.com.kaulife" />
+        <meta-data
+            android:name="DATABASE"
+            android:value="KAULife.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="2" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="ncs.com.kaulife" />
         <!-- End SugarOrm(DB) information -->
+        <activity android:name=".LmsActivity"
+            android:theme="@style/Theme.AppCompat" />
     </application>
 
 </manifest>

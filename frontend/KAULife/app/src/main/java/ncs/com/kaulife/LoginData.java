@@ -9,14 +9,16 @@ import com.orm.SugarRecord;
 public class LoginData extends SugarRecord<LoginData> {
     String studentNum;
     String password;
+    boolean lmsAuto;
 
 
     public LoginData () {
 
     }
 
-    public LoginData (String studentNum, String password) {
+    public LoginData (String studentNum, String password, boolean lmsAuto) {
         this.studentNum = studentNum;
         this.password = password;
+        this.lmsAuto = lmsAuto;
     }
 }
