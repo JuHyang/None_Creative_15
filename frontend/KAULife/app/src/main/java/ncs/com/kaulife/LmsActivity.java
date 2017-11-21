@@ -74,7 +74,6 @@ public class LmsActivity extends AppCompatActivity {
 
         Collections.reverse(lmsDatas);
 
-        //여기부터 리스트뷰 들어가면 끝
         // in content do not change the layout size of the RecyclerView
         lmsRecyclerView.setHasFixedSize(true);
 
@@ -117,21 +116,25 @@ public class LmsActivity extends AppCompatActivity {
         c.enqueue(new Callback<ArrayList<LmsData>>() {
             @Override
             public void onResponse(Call<ArrayList<LmsData>> call, Response<ArrayList<LmsData>> response) {
-                int status = 1;
+
                 ArrayList<LmsData> lmsDataTemp = response.body();
-                for (int i = 0; i < lmsDataTemp.size(); i ++) {
-                    LmsData receiveData = lmsDataTemp.get(i);
-                    for (int j = 0; j < lmsDatas.size(); j++) {
-                        LmsData tempData = lmsDatas.get(j);
-                        if (receiveData.time == tempData.time && receiveData.subject == tempData.subject && receiveData.content == tempData.content) {
-                            status = 0;
-                            break;
+                if (lmsDataTemp.size() != 0) {
+                    for (int i = 0; i < lmsDataTemp.size(); i++) {
+                        int status = 1;
+                        LmsData receiveData = lmsDataTemp.get(i);
+                        for (int j = 0; j < lmsDatas.size(); j++) {
+                            LmsData tempData = lmsDatas.get(j);
+                            if (receiveData.time == tempData.time && receiveData.subject == tempData.subject && receiveData.content == tempData.content) {
+                                status = 0;
+                                break;
+                            }
                         }
-                    }
-                    if (status == 1) {
-                        lmsDatas.add(receiveData);
-                        if (auto) {
-                            receiveData.save();
+                        if (status == 1) {
+                            lmsDatas.add(receiveData);
+                            lmsAdapter.notifyDataSetChanged();
+                            if (auto) {
+                                receiveData.save();
+                            }
                         }
                     }
                 }
@@ -150,7 +153,8 @@ public class LmsActivity extends AppCompatActivity {
         Intent intent = new Intent (getApplicationContext(), LmsAlarmReceiver.class);
         PendingIntent pending = getPendingIntent(intent, 1);
 
-        lmsAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 3600000, pending);
+//        lmsAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 3600000, pending);
+        lmsAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000, pending);
     }
 
     private PendingIntent getPendingIntent(Intent intent, int id) {
@@ -178,14 +182,16 @@ public class LmsActivity extends AppCompatActivity {
             }
         });
 
-        if (auto) {
-            btnSetting.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (auto) {
                     OpenDialog();
+                } else {
+                    Toast.makeText(getApplicationContext(), "자동로그인을 설정시에만 사용이 가능 합니다.",Toast.LENGTH_LONG).show();
                 }
-            });
-        }
+            }
+        });
 
         actionBar.setCustomView(actionBarView);
 
