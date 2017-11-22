@@ -1,0 +1,19 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend part",
+  "main": "spooky.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "casperjs": "^1.1.4",
+    "express": "^4.16.2",
+    "phantomjs": "^2.1.7",
+    "phantomjs-prebuilt": "^2.1.16",
+    "spooky": "^0.2.5",
+    "tiny-jsonrpc": "^2.0.1"
+  }
+}
