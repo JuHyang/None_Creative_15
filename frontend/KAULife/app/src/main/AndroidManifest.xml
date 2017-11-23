@@ -28,6 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
+        <activity android:name=".LmsActivity"
+            android:theme="@style/Theme.AppCompat" />
 
         <!-- Start SugarOrm(DB) information -->
         <meta-data
@@ -43,8 +45,17 @@
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="ncs.com.kaulife" />
         <!-- End SugarOrm(DB) information -->
-        <activity android:name=".LmsActivity"
-            android:theme="@style/Theme.AppCompat" />
+
+        <!-- Start receiver information -->
+        <receiver
+            android:name="ncs.com.kaulife.LmsAlarmReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <!-- Start receiver information -->
+
     </application>
 
 </manifest>

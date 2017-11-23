@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Repo {
     public ServerInterface getService() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://127.0.0.1:8000")
+                .baseUrl("http://192.168.0.15:8000")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         ServerInterface serverInterface = retrofit.create(ServerInterface.class);

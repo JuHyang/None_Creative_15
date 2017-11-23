@@ -24,11 +24,13 @@ var temp_result = new Array();
 var temp_result_1 = new Array();
 
 app.get("/test_post", function(req, res){
+  console.log("@" + req.method + " " + req.url);
   res.render('test_post')
 })
 
 
-app.post("/form_reciver", function(req,res){
+app.post("/lms/data", function(req,res){
+  console.log("@" + req.method + " " + req.url);
   var spooky = new Spooky({
     child: {
       transport: 'http',
@@ -52,7 +54,7 @@ app.post("/form_reciver", function(req,res){
         if(this.exists('span.postsincelogin')){
           temp = this.getElementsInfo('h3, div.overview.forum .name').map(function(info) {return info.text.trim('\n')})
           var date = new Date();
-          this.capture(String (date.getYear()) + String (date.getMonth()+1) + String (date.getDate()) + ".png")
+          // this.capture(String (date.getYear()) + String (date.getMonth()+1) + String (date.getDate()) + ".png")
           temp = String(temp).replace(/:/g,',')
           temp = temp.split(',')
           temp = String(temp)

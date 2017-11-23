@@ -6,8 +6,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -21,11 +21,10 @@ import retrofit2.Response;
 
 public class LmsAlarmReceiver extends BroadcastReceiver {
     private NotificationManager notificationManager;
-    private Notification notification;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context, "알람리시버", Toast.LENGTH_LONG).show();
+        Log.d("확인", "AlarmReceiver 입장");
         ArrayList<LoginData> loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
         LoginData loginDataTemp = loginDatas.get(0);
         if (Login(loginDataTemp).equals("1")) {
@@ -47,8 +46,8 @@ public class LmsAlarmReceiver extends BroadcastReceiver {
 //        return loginjudge;
     }
 
-
     public void GetLmsData(LoginData loginData, final Context context) {
+        Log.d("확인", "GetLmsData 입장");
         ServerInterface serverInterface = new Repo().getService();
         Call<ArrayList<LmsData>> c = serverInterface.GetLmsData(loginData);
         c.enqueue(new Callback<ArrayList<LmsData>>() {
@@ -63,10 +62,10 @@ public class LmsAlarmReceiver extends BroadcastReceiver {
                         LmsData receiveData = lmsDataTemp.get(i);
                         for (int j = 0; j < lmsDatas.size(); j++) {
                             LmsData tempData = lmsDatas.get(j);
-                            if (receiveData.time == tempData.time && receiveData.subject == tempData.subject && receiveData.content == tempData.content) {
-                                status = 0;
-                                break;
-                            }
+//                            if (receiveData.subject.equals(tempData.subject) && receiveData.content.equals(tempData.content)) {
+//                                status = 0;
+//                                break;
+//                            }
                         }
                         if (status == 1) {
                             receiveData.save(); //데이터 저장
@@ -89,14 +88,19 @@ public class LmsAlarmReceiver extends BroadcastReceiver {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 , new Intent (context, LmsActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
-        notification = new NotificationCompat.Builder(context)
-                .setContentTitle (lmsData.time)
-                .setContentText(lmsData.subject + " : " + lmsData.content)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
-                .build();
-        notificationManager.notify(1234, notification);
+        Notification.Builder builder = new Notification.Builder(context);
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
+        builder.setContentTitle("KAULife");
+        builder.setContentText(lmsData.subject + " : " + lmsData.content);
+        builder.setWhen(System.currentTimeMillis());
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setAutoCancel(true);
+        builder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
+        builder.setContentIntent(pendingIntent);
+        builder.setPriority(Notification.PRIORITY_MAX);
+
+
+        notificationManager.notify(1234, builder.build());
     }
 
     

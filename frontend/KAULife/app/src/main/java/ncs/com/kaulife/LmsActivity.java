@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -54,6 +55,7 @@ public class LmsActivity extends AppCompatActivity {
 
         InitModel();
         SetCustomActionBar();
+        GetLmsData(loginData, auto);
         aboutView();
     }
 
@@ -68,9 +70,8 @@ public class LmsActivity extends AppCompatActivity {
     }
 
     public void aboutView() {
+        Log.d("확인", "aboutView 입장");
         InitView();
-
-        GetLmsData(loginData, auto);
 
         Collections.reverse(lmsDatas);
 
@@ -90,11 +91,6 @@ public class LmsActivity extends AppCompatActivity {
         loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
         lmsDatas = (ArrayList) LmsData.listAll(LmsData.class);
 
-        for (int i = 0; i < 10; i ++) {
-            LmsData temp = new LmsData ("모바일SW    " + String.valueOf(i), "12:00", "과제과제과제과제");
-            lmsDatas.add(temp);
-        }
-
         if (loginDatas.size() == 0) {
             Intent intent = getIntent();
             studentNum = intent.getStringExtra("id");
@@ -109,6 +105,7 @@ public class LmsActivity extends AppCompatActivity {
     }
 
     public void GetLmsData(LoginData loginData, final Boolean auto) {
+        Log.d("확인", "GetLmsData 입장");
         LoginCheck(loginData);
 
         ServerInterface serverInterface = new Repo().getService();
@@ -118,19 +115,20 @@ public class LmsActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<LmsData>> call, Response<ArrayList<LmsData>> response) {
 
                 ArrayList<LmsData> lmsDataTemp = response.body();
+                Log.d("확인", lmsDataTemp.get(0).time);
                 if (lmsDataTemp.size() != 0) {
                     for (int i = 0; i < lmsDataTemp.size(); i++) {
                         int status = 1;
                         LmsData receiveData = lmsDataTemp.get(i);
-                        for (int j = 0; j < lmsDatas.size(); j++) {
-                            LmsData tempData = lmsDatas.get(j);
-                            if (receiveData.time == tempData.time && receiveData.subject == tempData.subject && receiveData.content == tempData.content) {
-                                status = 0;
-                                break;
-                            }
-                        }
+//                        for (int j = 0; j < lmsDatas.size(); j++) {
+//                            LmsData tempData = lmsDatas.get(j);
+//                            if (receiveData.subject.equals(tempData.subject) && receiveData.content.equals(tempData.content)) {
+//                                status = 0;
+//                                break;
+//                            }
+//                        }
                         if (status == 1) {
-                            lmsDatas.add(receiveData);
+                            lmsDatas.add(0, receiveData);
                             lmsAdapter.notifyDataSetChanged();
                             if (auto) {
                                 receiveData.save();
@@ -149,20 +147,17 @@ public class LmsActivity extends AppCompatActivity {
     }
 
     public void AutoGetData () {
+        Log.d("확인", "AutoGetData 입장");
         lmsAlarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent (getApplicationContext(), LmsAlarmReceiver.class);
-        PendingIntent pending = getPendingIntent(intent, 1);
+        Intent intent = new Intent (LmsActivity.this, LmsAlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(LmsActivity.this, 1, intent, 0);
 
-//        lmsAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 3600000, pending);
-        lmsAlarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5000, pending);
-    }
-
-    private PendingIntent getPendingIntent(Intent intent, int id) {
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        return pendingIntent;
+//        lmsAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 3600000, pendingIntent);
+        lmsAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 10000, pendingIntent);
     }
 
     private void SetCustomActionBar () {
+        Log.d("확인", "SetCustomActionBar 입장");
         ActionBar actionBar = getSupportActionBar();
 
         actionBar.setDisplayShowCustomEnabled(true);
@@ -171,8 +166,8 @@ public class LmsActivity extends AppCompatActivity {
 
         View actionBarView = LayoutInflater.from(this).inflate(R.layout.layout_actionbar, null);
 
-        btnSetting = actionBarView.findViewById(R.id.btnSetting);
-        btnGetLmsData = actionBarView.findViewById(R.id.btnGetLmsData);
+        btnSetting = (ImageButton) actionBarView.findViewById(R.id.btnSetting);
+        btnGetLmsData = (ImageButton) actionBarView.findViewById(R.id.btnGetLmsData);
 
         btnGetLmsData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,6 +198,7 @@ public class LmsActivity extends AppCompatActivity {
     }
 
     public void OpenDialog() {
+        Log.d("확인", "OpenDialog 입장");
         LayoutInflater layoutInflater = getLayoutInflater();
         View dialogLayout = layoutInflater.inflate(R.layout.lms_dialog, null);
 
@@ -214,10 +210,11 @@ public class LmsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginData.delete();
+                LmsData.deleteAll(LmsData.class);
                 Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 AlarmCancel();
-                finish();
+                LmsActivity.this.finish();
             }
         });
 
@@ -226,9 +223,14 @@ public class LmsActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (toggleAuto.isChecked()) {
+                    Log.d("확인", "Dialog if 문 1입장");
+                    loginData.lmsAuto = true;
+                    loginData.save();
                     AutoGetData();
                 } else if (toggleAuto.isChecked() == false && loginData.lmsAuto == true) {
+                    Log.d("확인", "Dialog if 문 2입장");
                     AlarmCancel();
+                    loginData.lmsAuto = false;
                 }
                 loginData.lmsAuto = toggleAuto.isChecked();
                 loginData.save();
@@ -244,6 +246,7 @@ public class LmsActivity extends AppCompatActivity {
     }
 
     public void AlarmCancel() {
+        Log.d("확인", "AlarmCancel 입장");
         AlarmManager alarmManager = (AlarmManager)getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, LmsAlarmReceiver.class);
         PendingIntent sender = PendingIntent.getBroadcast(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -255,6 +258,7 @@ public class LmsActivity extends AppCompatActivity {
     }
 
     public void LoginCheck (LoginData loginData) {
+        Log.d("확인", "LoginCheck 입장");
         String loginjudge = Login(loginData);
         if (loginjudge.equals("1")) {
             return;
@@ -270,6 +274,7 @@ public class LmsActivity extends AppCompatActivity {
     }
 
     public String Login (LoginData loginData) {
+        Log.d("확인", "Login 입장");
         return "1";
 //        String loginjudge = "";
 //        ServerInterface serverInterface = new Repo().getService();
