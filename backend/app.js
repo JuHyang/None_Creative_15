@@ -15,10 +15,9 @@ app.set('views','./views');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var url = "http://127.0.0.1:3000/lms_before.html"
+var url = "http://127.0.0.1:3000/lms_before_arr.html"
 
 var result;
-var i;
 var temp;
 var temp_re = new Array();
 var temp_result = new Array();
@@ -80,14 +79,14 @@ app.post("/form_reciver", function(req,res){
   spooky.on('result', function(result){
 
     var k = 0;
-    var objJSON = new Object();
+  //  var objJSON = new Object();
     var objJSONAArr = new Array();
 
     if(result != ""){
       temp_re = result.split(',')
-      for(i = 0; i < temp_re.length; i++) {
+      for(var i = 0; i < temp_re.length; i++) {
         if(temp_re[i] == '포럼') {
-          temp_result[k] = String(temp_re[i-1] + ',' + temp_re[i+1])
+          temp_result[k] = temp_re[i-1] + ',' + temp_re[i+1]
           k++
           result = temp_result[k]
         }
@@ -102,12 +101,11 @@ app.post("/form_reciver", function(req,res){
         var date = new Date();
         var Time = String(date.getMonth()+1) + '월 ' + String(date.getDate()) + '일 ' + String(date.getHours()) + '시 ' + String(date.getMinutes()) + '분'
 
-        objJSON.time = Time;
-        objJSON.subject = Subject;
-        objJSON.content = Content;
+        temp_result_1[j] = {"time" : Time , "subject" : Subject , "content" : Content}
 
-        objJSONAArr.push(objJSON);
-
+      }
+      for(var i = 0; i < temp_result_1.length; i++) {
+        objJSONAArr.push(temp_result_1[i]);
       }
 
       result = objJSONAArr
