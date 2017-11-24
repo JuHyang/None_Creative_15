@@ -15,9 +15,11 @@ app.set('views','./views');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var url_lms = "http://lms.kau.ac.kr"
 var url = "http://127.0.0.1:3000/lms_before_arr.html"
 
 var result;
+var result_login;
 var temp;
 var temp_re = new Array();
 var temp_result = new Array();
@@ -28,9 +30,67 @@ app.get("/test_post", function(req, res){
   res.render('test_post')
 })
 
+app.post("/login", function(req,res){
+  console.log("@" + req.method + " " + req.url);
+
+  var spooky = new Spooky({
+    child: {
+      transport: 'http',
+      command : 'casperjs.cmd'
+    },
+    casper: {
+      logLevel: 'debug',
+      verbose: true}
+    },
+    function(err){
+      if(err) {
+        e = new Error('Failed to initialize SpookyJS');
+        e.details = err;
+        throw e;
+      }
+
+      spooky.start(url_lms);
+
+      spooky.then(function(){
+        this.click('#btn_sso_login')
+      })
+      // spooky.then(function(){
+      //   this.capture('login.png')
+      // })
+
+      var id_req = req.body.user_id;
+      var pwd_req = req.body.user_pwd;
+
+      spooky.then([{id_then : id_req , pwd_then : pwd_req}, function(){
+        this.fill ('form[name=LoginForm]', {'p_id' : id_then, 'p_pwd' : pwd_then}, true);
+      }])
+
+      spooky.then(function(){
+        this.wait(1000,function(){
+          if(this.exists('header, div.container-fluid .row-fluid .login-header .loggedin-user, ul.nav.pull-left, li.navbar-text, div.logininfo')){
+            result_login = "1"
+            this.emit('result_login' ,result_login)
+          }
+          else{
+            result_login = "0"
+            this.emit('result_login' ,result_login)
+          }
+        })
+      })
+
+      spooky.run()
+    })
+
+    spooky.on('result_login', function(result_login){
+      console.log('login sign: ',result_login);
+      res.send(result_login);
+    })
+})
+
 
 app.post("/lms/data", function(req,res){
   console.log("@" + req.method + " " + req.url);
+
   var spooky = new Spooky({
     child: {
       transport: 'http',
@@ -47,7 +107,22 @@ app.post("/lms/data", function(req,res){
         throw e;
       }
 
-    spooky.start(url);
+    spooky.start(url_lms);
+
+    spooky.then(function(){
+      this.click('#btn_sso_login')
+    })
+
+    // spooky.then(function(){
+    //   this.capture('login.png')
+    // })
+
+    var id_req = req.body.user_id;
+    var pwd_req = req.body.user_pwd;
+
+    spooky.then([{id_then : id_req , pwd_then : pwd_req}, function(){
+      this.fill ('form[name=LoginForm]', {'p_id' : id_then, 'p_pwd' : pwd_then}, true);
+    }])
 
     spooky.then(function(){
       this.wait(1000, function(){
