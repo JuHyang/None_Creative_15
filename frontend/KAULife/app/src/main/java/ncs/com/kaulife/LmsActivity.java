@@ -20,6 +20,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -275,16 +279,22 @@ public class LmsActivity extends AppCompatActivity {
 
     public String Login (LoginData loginData) {
         Log.d("확인", "Login 입장");
-        return "1";
-//        String loginjudge = "";
-//        ServerInterface serverInterface = new Repo().getService();
-//        Call<String> c = serverInterface.LmsLogin(loginData);
-//        try {
-//            loginjudge = c.execute().body();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return "-1";
-//        }
-//        return loginjudge;
+        final String[] loginjudge = {""};
+
+        ServerInterface serverInterface = new Repo().getService();
+        Call<String> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
+        c.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                loginjudge[0] = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                loginjudge[0] = "-1";
+            }
+        });
+
+        return loginjudge[0];
     }
 }

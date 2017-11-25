@@ -1,13 +1,24 @@
 package ncs.com.kaulife;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends Activity {
     EditText editTextId;
@@ -19,6 +30,9 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ActionBar actionBar = getActionBar();
+        actionBar.hide();
 
         aboutView();
     }
@@ -71,17 +85,24 @@ public class LoginActivity extends Activity {
     }
 
     public String Login (LoginData loginData) {
-        return "1";
-//        String loginjudge = "";
-//        ServerInterface serverInterface = new Repo().getService();
-//        Call<String> c = serverInterface.LmsLogin(loginData);
-//        try {
-//            loginjudge = c.execute().body();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return "-1";
-//        }
-//        return loginjudge;
+        Log.d("확인", "Login 입장");
+        final String[] loginjudge = {""};
+
+        ServerInterface serverInterface = new Repo().getService();
+        Call<String> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
+        c.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                loginjudge[0] = response.body();
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                loginjudge[0] = "-1";
+            }
+        });
+
+        return loginjudge[0];
     }
 
 }
