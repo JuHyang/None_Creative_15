@@ -89,15 +89,16 @@ public class LoginActivity extends Activity {
         final String[] loginjudge = {""};
 
         ServerInterface serverInterface = new Repo().getService();
-        Call<String> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
-        c.enqueue(new Callback<String>() {
+        Call<LoginReceiveData> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
+        c.enqueue(new Callback<LoginReceiveData>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                loginjudge[0] = response.body();
+            public void onResponse(Call<LoginReceiveData> call, Response<LoginReceiveData> response) {
+                LoginReceiveData loginReceiveData = response.body();
+                loginjudge[0] = loginReceiveData.result;
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<LoginReceiveData> call, Throwable t) {
                 loginjudge[0] = "-1";
             }
         });
