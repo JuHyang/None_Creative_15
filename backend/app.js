@@ -16,7 +16,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var url_lms = "http://lms.kau.ac.kr"
-var url = "http://127.0.0.1:3000/lms_before_arr.html"
+// var url = "http://127.0.0.1:3000/lms_before_arr.html"
 
 var result;
 var result_login;
