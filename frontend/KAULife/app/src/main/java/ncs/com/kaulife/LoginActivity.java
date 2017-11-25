@@ -50,60 +50,54 @@ public class LoginActivity extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (getApplicationContext(), LmsActivity.class);
+
                 String id = editTextId.getText().toString();
                 String password = editTextPwd.getText().toString();
                 Boolean auto = switchAuto.isChecked();
                 if (auto) {
                     LoginData loginData = new LoginData(id, password, false);
-                    LoginCheck(loginData, intent, auto);
+                    LoginCheck(loginData, auto);
 
                 } else {
-                    intent.putExtra("id", id);
-                    intent.putExtra("password", password);
+
                     LoginData loginData = new LoginData(id, password, false);
-                    LoginCheck(loginData, intent, auto);
+                    LoginCheck(loginData, auto);
                 }
 
             }
         });
     }
 
-    public void LoginCheck (LoginData loginData, Intent intent, Boolean auto) {
-        String loginjudge = Login(loginData);
-        if (loginjudge.equals("1")) {
-            if (auto) {
-                loginData.save();
-            }
-            startActivity(intent);
-            finish();
-        } else if (loginjudge.equals("0")) {
-            Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "서버에 오류가 있습니다. 잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public String Login (LoginData loginData) {
-        Log.d("확인", "Login 입장");
-        final String[] loginjudge = {""};
-
+    public void LoginCheck (final LoginData loginData, final Boolean auto) {
         ServerInterface serverInterface = new Repo().getService();
         Call<LoginReceiveData> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
         c.enqueue(new Callback<LoginReceiveData>() {
             @Override
             public void onResponse(Call<LoginReceiveData> call, Response<LoginReceiveData> response) {
+                Intent intent = new Intent (getApplicationContext(), LmsActivity.class);
+
                 LoginReceiveData loginReceiveData = response.body();
-                loginjudge[0] = loginReceiveData.result;
+                if (loginReceiveData.result.equals("1")) {
+                    if (auto) {
+                        loginData.save();
+                    } else {
+                        intent.putExtra("id", loginData.studentNum);
+                        intent.putExtra("password", loginData.password);
+                    }
+                    startActivity(intent);
+                    finish();
+                } else if (loginReceiveData.result.equals("0")) {
+                    Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<LoginReceiveData> call, Throwable t) {
-                loginjudge[0] = "-1";
+                Toast.makeText(getApplicationContext(), "서버에 오류가 있습니다. 잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
 
-        return loginjudge[0];
     }
 
 }

@@ -15,7 +15,8 @@ import retrofit2.http.POST;
 
 public interface ServerInterface {
     @POST("/lms/data")
-    public Call<ArrayList<LmsData>> GetLmsData (@Body LoginData loginData);
+    @FormUrlEncoded
+    public Call<ArrayList<LmsData>> GetLmsData (@Field("studentNum") String studentNum, @Field("password") String password);
 
     @POST("/login")
     @FormUrlEncoded

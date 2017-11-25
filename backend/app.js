@@ -66,15 +66,14 @@ app.post("/login", function(req,res){
       }])
 
       spooky.then(function(){
-        this.wait(1000,function(){
+        this.wait(500,function(){
           if(this.exists('header, div.container-fluid .row-fluid .login-header .loggedin-user, ul.nav.pull-left, li.navbar-text, div.logininfo')){
             result_login = "1"
-            this.emit('result_login' ,result_login)
           }
           else{
             result_login = "0"
-            this.emit('result_login' ,result_login)
           }
+          this.emit('result_login' ,result_login)
         })
       })
 
@@ -128,7 +127,7 @@ app.post("/lms/data", function(req,res){
     }])
 
     spooky.then(function(){
-      this.wait(1000, function(){
+      this.wait(500, function(){
         if(this.exists('span.postsincelogin')){
           temp = this.getElementsInfo('h3, div.overview.forum .name').map(function(info) {return info.text.trim('\n')})
           var date = new Date();

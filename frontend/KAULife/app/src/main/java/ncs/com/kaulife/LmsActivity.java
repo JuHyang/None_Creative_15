@@ -110,16 +110,14 @@ public class LmsActivity extends AppCompatActivity {
 
     public void GetLmsData(LoginData loginData, final Boolean auto) {
         Log.d("확인", "GetLmsData 입장");
-        LoginCheck(loginData);
 
         ServerInterface serverInterface = new Repo().getService();
-        Call<ArrayList<LmsData>> c = serverInterface.GetLmsData(loginData);
+        Call<ArrayList<LmsData>> c = serverInterface.GetLmsData(loginData.studentNum, loginData.password);
         c.enqueue(new Callback<ArrayList<LmsData>>() {
             @Override
             public void onResponse(Call<ArrayList<LmsData>> call, Response<ArrayList<LmsData>> response) {
 
                 ArrayList<LmsData> lmsDataTemp = response.body();
-                Log.d("확인", lmsDataTemp.get(0).time);
                 if (lmsDataTemp.size() != 0) {
                     for (int i = 0; i < lmsDataTemp.size(); i++) {
                         int status = 1;
@@ -261,41 +259,4 @@ public class LmsActivity extends AppCompatActivity {
 
     }
 
-    public void LoginCheck (LoginData loginData) {
-        Log.d("확인", "LoginCheck 입장");
-        String loginjudge = Login(loginData);
-        if (loginjudge.equals("1")) {
-            return;
-        } else if (loginjudge.equals("0")) {
-            Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            Toast.makeText(getApplicationContext(), "서버에 오류가 있습니다. 잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show();
-            finish();
-        }
-    }
-
-    public String Login (LoginData loginData) {
-        Log.d("확인", "Login 입장");
-        final String[] loginjudge = {""};
-
-        ServerInterface serverInterface = new Repo().getService();
-        Call<LoginReceiveData> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
-        c.enqueue(new Callback<LoginReceiveData>() {
-            @Override
-            public void onResponse(Call<LoginReceiveData> call, Response<LoginReceiveData> response) {
-                LoginReceiveData loginReceiveData = response.body();
-                loginjudge[0] = loginReceiveData.result;
-            }
-
-            @Override
-            public void onFailure(Call<LoginReceiveData> call, Throwable t) {
-                loginjudge[0] = "-1";
-            }
-        });
-
-        return loginjudge[0];
-    }
 }
