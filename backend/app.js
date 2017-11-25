@@ -58,8 +58,8 @@ app.post("/login", function(req,res){
       //   this.capture('login.png')
       // })
 
-      var id_req = req.body.user_id;
-      var pwd_req = req.body.user_pwd;
+      var id_req = req.body.studentNum;
+      var pwd_req = req.body.password;
 
       spooky.then([{id_then : id_req , pwd_then : pwd_req}, function(){
         this.fill ('form[name=LoginForm]', {'p_id' : id_then, 'p_pwd' : pwd_then}, true);
@@ -82,7 +82,10 @@ app.post("/login", function(req,res){
     })
 
     spooky.on('result_login', function(result_login){
-      console.log('login sign: ',result_login);
+
+      result_login = {"result" : result_login}
+
+      console.log(result_login);
       res.send(result_login);
     })
 })
@@ -117,8 +120,8 @@ app.post("/lms/data", function(req,res){
     //   this.capture('login.png')
     // })
 
-    var id_req = req.body.user_id;
-    var pwd_req = req.body.user_pwd;
+    var id_req = req.body.studentNum;
+    var pwd_req = req.body.password;
 
     spooky.then([{id_then : id_req , pwd_then : pwd_req}, function(){
       this.fill ('form[name=LoginForm]', {'p_id' : id_then, 'p_pwd' : pwd_then}, true);
