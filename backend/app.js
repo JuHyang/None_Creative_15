@@ -178,7 +178,15 @@ app.post("/lms/data", function(req,res){
         var Subject = result[0]
         var Content = result[1]
         var date = new Date();
-        var Time = String(date.getMonth()+1) + '월 ' + String(date.getDate()) + '일 ' + String(date.getHours()) + '시 ' + String(date.getMinutes()) + '분'
+        var hour = date.getHours();
+        var hour_str;
+        if (hour > 12) {
+          hour = hour - 12;
+          hour_str = "오후 " + String (hour)
+        } else {
+          hour_str = "오전 " + String (hour)
+        }
+        var Time = String(date.getMonth()+1) + '월 ' + String(date.getDate()) + '일 ' + hour_str + ' : ' + String(date.getMinutes()) + '분'
 
         temp_result_1[j] = {"time" : Time , "subject" : Subject , "content" : Content}
 

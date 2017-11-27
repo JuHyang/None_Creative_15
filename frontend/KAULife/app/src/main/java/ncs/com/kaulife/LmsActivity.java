@@ -95,6 +95,16 @@ public class LmsActivity extends AppCompatActivity {
         loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
         lmsDatas = (ArrayList) LmsData.listAll(LmsData.class);
 
+        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
+        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
+        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
+        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
+        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
+        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
+        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
+        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
+        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
+
         if (loginDatas.size() == 0) {
             Intent intent = getIntent();
             studentNum = intent.getStringExtra("id");
@@ -154,8 +164,8 @@ public class LmsActivity extends AppCompatActivity {
         Intent intent = new Intent (LmsActivity.this, LmsAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(LmsActivity.this, 1, intent, 0);
 
-//        lmsAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 3600000, pendingIntent);
-        lmsAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 10000, pendingIntent);
+        lmsAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 3600000, pendingIntent);
+//        lmsAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 10000, pendingIntent);
     }
 
     private void SetCustomActionBar () {

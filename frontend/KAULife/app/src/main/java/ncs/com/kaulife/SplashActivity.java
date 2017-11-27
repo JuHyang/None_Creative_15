@@ -29,11 +29,12 @@ public class SplashActivity extends Activity {
         ActionBar actionBar = getActionBar();
         actionBar.hide();
 
+        SelectActivity();
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                SelectActivity();
+
             }
         }, 3000);
     }
@@ -42,9 +43,17 @@ public class SplashActivity extends Activity {
         ArrayList<LoginData> loginDatas;
         loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
         if (loginDatas.size() == 0) {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(intent);
-            finish();
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }, 3000);
+
         } else {
             LoginCheck(loginDatas.get(0));
         }
