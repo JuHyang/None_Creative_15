@@ -6,6 +6,7 @@ try {
 
 var express = require ('express');
 var bodyParser = require('body-parser');
+const puppeteer = require('puppeteer');
 
 var app = express();
 
@@ -25,6 +26,12 @@ var temp_re = new Array();
 var temp_result = new Array();
 var temp_result_1 = new Array();
 
+function delay(time) {
+   return new Promise(function(resolve) {
+       setTimeout(resolve, time)
+   });
+}
+
 app.get("/test_post", function(req, res){
   console.log("@" + req.method + " " + req.url);
   res.render('test_post')
@@ -33,135 +40,77 @@ app.get("/test_post", function(req, res){
 app.post("/login", function(req,res){
   console.log("@" + req.method + " " + req.url);
 
-  var spooky = new Spooky({
-    child: {
-      transport: 'http',
-      command : 'casperjs.cmd'
-    },
-    casper: {
-      logLevel: 'debug',
-      verbose: true}
-    },
-    function(err){
-      if(err) {
-        e = new Error('Failed to initialize SpookyJS');
-        e.details = err;
-        throw e;
-      }
+  var result_login = ""
+  var id_req = req.body.studentNum;
+  var pwd_req = req.body.password;
 
-      spooky.start(url_lms);
+  (async () => {
+    const browser = await puppeteer.launch({
+      headless: true //창을 띄워서 확인하려면 false headless 는 true 옵션
+    });
+    browser.newPage({ context: 'another-context' })
+    const page = await browser.newPage();
+    page.on('dialog', async dialog => {
+      await dialog.dismiss();
+    });
+    await page.goto('https://www.kau.ac.kr/page/login.jsp?target_page=act_Lms_Check.jsp@chk1-1'); // lms 로그인창으로 이동
+    // await page.goto('http://127.0.0.1:3000/lms_before_arr.html') // 테스트용
+    await page.type("[name=p_id]", id_req) // id찾아서 넣기
+    await page.type("[name=p_pwd]", pwd_req) // 비밀번호 찾아서 넣기
+    await page.click("body > div.aside > div.articel > table:nth-child(2) > tbody > tr:nth-child(3) > td > form > table > tbody > tr:nth-child(3) > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr > td:nth-child(2) > a > img") // 로그인 버튼 클릭
+    await delay(5000);
+    if (await page.$('#loggedin-user > ul > li > div') != null) {
+      result_login = "1";
+    } else {
+      result_login = "0";
+    }
 
-      spooky.then(function(){
-        this.click('#btn_sso_login')
-      })
-      // spooky.then(function(){
-      //   this.capture('login.png')
-      // })
-
-      var id_req = req.body.studentNum;
-      var pwd_req = req.body.password;
-
-      spooky.then([{id_then : id_req , pwd_then : pwd_req}, function(){
-        this.fill ('form[name=LoginForm]', {'p_id' : id_then, 'p_pwd' : pwd_then}, true);
-      }])
-
-      spooky.then(function(){
-        this.wait(500,function(){
-          if(this.exists('header, div.container-fluid .row-fluid .login-header .loggedin-user, ul.nav.pull-left, li.navbar-text, div.logininfo')){
-            result_login = "1"
-          }
-          else{
-            result_login = "0"
-          }
-          this.emit('result_login' ,result_login)
-        })
-      })
-
-      spooky.run()
-    })
-
-    spooky.on('result_login', function(result_login){
-
-      result_login = {"result" : result_login}
-
-      console.log(result_login);
-      res.send(result_login);
-    })
+    browser.close();
+    console.log(result_login);
+    res.send(result_login);
+  })();
 })
 
 
 app.post("/lms/data", function(req,res){
   console.log("@" + req.method + " " + req.url);
 
-  var spooky = new Spooky({
-    child: {
-      transport: 'http',
-      command : 'casperjs.cmd'
-    },
-    casper: {
-      logLevel: 'debug',
-      verbose: true}
-    },
-    function(err){
-      if(err){
-        e = new Error('Failed to initialize SpookyJS');
-        e.details = err;
-        throw e;
-      }
+  var id_req = req.body.studentNum;
+  var pwd_req = req.body.password;
 
-    spooky.start(url_lms);
+  (async () => {
+    const browser = await puppeteer.launch({
+      headless: true //창을 띄워서 확인하려면 false headless 는 true 옵션
+    });
+    browser.newPage({ context: 'another-context' })
+    const page = await browser.newPage();
+    await page.goto('https://www.kau.ac.kr/page/login.jsp?target_page=act_Lms_Check.jsp@chk1-1'); // lms 로그인창으로 이동
+    // await page.goto('http://127.0.0.1:3000/lms_before_arr.html') // 테스트용
+    await page.type("[name=p_id]", id_req) // id찾아서 넣기
+    await page.type("[name=p_pwd]", pwd_req) // 비밀번호 찾아서 넣기
+    await page.click("body > div.aside > div.articel > table:nth-child(2) > tbody > tr:nth-child(3) > td > form > table > tbody > tr:nth-child(3) > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr > td:nth-child(2) > a > img") // 로그인 버튼 클릭
 
-    spooky.then(function(){
-      this.click('#btn_sso_login')
-    })
+    await page.waitForSelector("#wrapper > header.navbar > nav > div > a.brand");
+    if (await page.$('span.postsincelogin') != null) {
+      result = await page.evaluate(() => {
+        const anchors = Array.from(document.querySelectorAll('h3, div.overview.forum .name'));
+        return anchors.map(anchor => anchor.textContent);
+      });
+    } else {
+      result = "";
+    }
+    browser.close();
 
-    // spooky.then(function(){
-    //   this.capture('login.png')
-    // })
-
-    var id_req = req.body.studentNum;
-    var pwd_req = req.body.password;
-
-    spooky.then([{id_then : id_req , pwd_then : pwd_req}, function(){
-      this.fill ('form[name=LoginForm]', {'p_id' : id_then, 'p_pwd' : pwd_then}, true);
-    }])
-
-    spooky.then(function(){
-      this.wait(500, function(){
-        if(this.exists('span.postsincelogin')){
-          temp = this.getElementsInfo('h3, div.overview.forum .name').map(function(info) {return info.text.trim('\n')})
-          var date = new Date();
-          // this.capture(String (date.getYear()) + String (date.getMonth()+1) + String (date.getDate()) + ".png")
-          temp = String(temp).replace(/:/g,',')
-          temp = temp.split(',')
-          temp = String(temp)
-          result = temp
-          this.emit('result', result);
-        }
-        else{
-          result = ""
-          this.emit('result', result);
-        }
-      })
-    })
-    spooky.run()
-  })
-
-  spooky.on('error', function (e, stack) {
-      console.error(e);
-      if (stack) {
-          console.log(stack);
-      }
-  })
-
-
-  spooky.on('result', function(result){
+    result = String (result);
+    result = result.replace(/:/g,',');
 
     var k = 0;
-  //  var objJSON = new Object();
     var objJSONAArr = new Array();
+    var temp_re = new Array();
+    var temp_result = new Array();
+    var temp_result_1 = new Array();
 
-    if(result != ""){
+    if (result != "") {
       temp_re = result.split(',')
       for(var i = 0; i < temp_re.length; i++) {
         if(temp_re[i] == '포럼') {
@@ -170,7 +119,6 @@ app.post("/lms/data", function(req,res){
           result = temp_result[k]
         }
       }
-
       for (var j = 0; j < temp_result.length; j++) {
         var re = temp_result[j]
         result = re.split(',')
@@ -196,15 +144,15 @@ app.post("/lms/data", function(req,res){
       }
 
       result = objJSONAArr
-  }
-  else{
-    var jsonArr = new Array();
-    result = jsonArr;
-  }
+    }
+    else{
+      var jsonArr = new Array();
+      result = jsonArr;
+    }
 
     console.log(result);
     res.send(result);
-  })
+  })();
 
 })
 
