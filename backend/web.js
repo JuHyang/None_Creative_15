@@ -16,7 +16,7 @@ app.set('views','./views');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var url_lms = "http://lms.kau.ac.kr"
+var url_lms = "'https://www.kau.ac.kr/page/login.jsp?target_page=act_Lms_Check.jsp@chk1-1'"
 // var url = "http://127.0.0.1:3000/lms_before_arr.html"
 
 var result;
@@ -45,20 +45,18 @@ app.post("/login", function(req,res){
   var pwd_req = req.body.password;
 
   (async () => {
-    const browser = await puppeteer.launch({
-      headless: true //창을 띄워서 확인하려면 false headless 는 true 옵션
-    });
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     browser.newPage({ context: 'another-context' })
     const page = await browser.newPage();
     page.on('dialog', async dialog => {
       await dialog.dismiss();
     });
-    await page.goto('https://www.kau.ac.kr/page/login.jsp?target_page=act_Lms_Check.jsp@chk1-1'); // lms 로그인창으로 이동
+    await page.goto('url_lms'); // lms 로그인창으로 이동
     // await page.goto('http://127.0.0.1:3000/lms_before_arr.html') // 테스트용
     await page.type("[name=p_id]", id_req) // id찾아서 넣기
     await page.type("[name=p_pwd]", pwd_req) // 비밀번호 찾아서 넣기
     await page.click("body > div.aside > div.articel > table:nth-child(2) > tbody > tr:nth-child(3) > td > form > table > tbody > tr:nth-child(3) > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr > td:nth-child(2) > a > img") // 로그인 버튼 클릭
-    await delay(5000);
+    await delay(3000);
     if (await page.$('#loggedin-user > ul > li > div') != null) {
       result_login = "1";
     } else {
@@ -79,12 +77,10 @@ app.post("/lms/data", function(req,res){
   var pwd_req = req.body.password;
 
   (async () => {
-    const browser = await puppeteer.launch({
-      headless: true //창을 띄워서 확인하려면 false headless 는 true 옵션
-    });
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
     browser.newPage({ context: 'another-context' })
     const page = await browser.newPage();
-    await page.goto('https://www.kau.ac.kr/page/login.jsp?target_page=act_Lms_Check.jsp@chk1-1'); // lms 로그인창으로 이동
+    await page.goto('url_lms'); // lms 로그인창으로 이동
     // await page.goto('http://127.0.0.1:3000/lms_before_arr.html') // 테스트용
     await page.type("[name=p_id]", id_req) // id찾아서 넣기
     await page.type("[name=p_pwd]", pwd_req) // 비밀번호 찾아서 넣기
@@ -156,6 +152,6 @@ app.post("/lms/data", function(req,res){
 
 })
 
-app.listen(8000, function (){
-  console.log ('Connected 8000 port!!!');
+app.listen(8001, function (){
+  console.log ('Connected 8001 port!!!');
 });

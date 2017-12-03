@@ -95,15 +95,6 @@ public class LmsActivity extends AppCompatActivity {
         loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
         lmsDatas = (ArrayList) LmsData.listAll(LmsData.class);
 
-        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
-        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
-        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
-        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
-        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
-        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
-        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
-        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
-        lmsDatas.add(new LmsData("웹SW스튜디오 (0494)", "11월 27일 오후 8 : 38", "재능기부 프로젝트"));
 
         if (loginDatas.size() == 0) {
             Intent intent = getIntent();
@@ -132,13 +123,13 @@ public class LmsActivity extends AppCompatActivity {
                     for (int i = 0; i < lmsDataTemp.size(); i++) {
                         int status = 1;
                         LmsData receiveData = lmsDataTemp.get(i);
-//                        for (int j = 0; j < lmsDatas.size(); j++) {
-//                            LmsData tempData = lmsDatas.get(j);
-//                            if (receiveData.subject.equals(tempData.subject) && receiveData.content.equals(tempData.content)) {
-//                                status = 0;
-//                                break;
-//                            }
-//                        }
+                        for (int j = 0; j < lmsDatas.size(); j++) {
+                            LmsData tempData = lmsDatas.get(j);
+                            if (receiveData.subject.equals(tempData.subject) && receiveData.content.equals(tempData.content)) {
+                                status = 0;
+                                break;
+                            }
+                        }
                         if (status == 1) {
                             lmsDatas.add(0, receiveData);
                             lmsAdapter.notifyDataSetChanged();

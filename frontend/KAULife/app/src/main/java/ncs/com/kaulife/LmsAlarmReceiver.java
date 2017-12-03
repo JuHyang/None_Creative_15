@@ -47,7 +47,6 @@ public class LmsAlarmReceiver extends BroadcastReceiver {
                     GetLmsData(loginData, context);
                 } else if (loginReceiveData.result.equals("0")) {
                     GenerateNotification(context, "로그인에 실패하였습니다. 로그인 정보를 확인 해 주세요.");
-                    LoginData.deleteAll(LoginData.class);
                 }
             }
             @Override
@@ -71,10 +70,10 @@ public class LmsAlarmReceiver extends BroadcastReceiver {
                         LmsData receiveData = lmsDataTemp.get(i);
                         for (int j = 0; j < lmsDatas.size(); j++) {
                             LmsData tempData = lmsDatas.get(j);
-//                            if (receiveData.subject.equals(tempData.subject) && receiveData.content.equals(tempData.content)) {
-//                                status = 0;
-//                                break;
-//                            }
+                            if (receiveData.subject.equals(tempData.subject) && receiveData.content.equals(tempData.content)) {
+                                status = 0;
+                                break;
+                            }
                         }
                         if (status == 1) {
                             receiveData.save(); //데이터 저장

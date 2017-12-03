@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +26,7 @@ public class LoginActivity extends Activity {
     EditText editTextPwd;
     Switch switchAuto;
     Button btnLogin;
+    ArrayList<LoginData> loginDatas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +49,18 @@ public class LoginActivity extends Activity {
     public void aboutView () {
         initView ();
 
+        loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String id = editTextId.getText().toString();
+                String studentNum = editTextId.getText().toString();
                 String password = editTextPwd.getText().toString();
                 Boolean auto = switchAuto.isChecked();
-                if (auto) {
-                    LoginData loginData = new LoginData(id, password, false);
-                    LoginCheck(loginData, auto);
 
-                } else {
-
-                    LoginData loginData = new LoginData(id, password, false);
-                    LoginCheck(loginData, auto);
-                }
+                LoginData loginData = new LoginData(studentNum, password, false);
+                LoginCheck(loginData, auto);
 
             }
         });
@@ -79,7 +77,19 @@ public class LoginActivity extends Activity {
                 LoginReceiveData loginReceiveData = response.body();
                 if (loginReceiveData.result.equals("1")) {
                     if (auto) {
-                        loginData.save();
+                        if (loginDatas.size() != 0) {
+                            LoginData temp = loginDatas.get(0);
+                            if (!(temp.studentNum.equals(loginData.studentNum))) {
+                                LmsData.deleteAll(LmsData.class);
+                                LoginData.deleteAll(LoginData.class);
+                                loginData.save();
+                            } else {
+                                temp.password = loginData.password;
+                                temp.save();
+                            }
+                        } else {
+                            loginData.save();
+                        }
                     } else {
                         intent.putExtra("id", loginData.studentNum);
                         intent.putExtra("password", loginData.password);
