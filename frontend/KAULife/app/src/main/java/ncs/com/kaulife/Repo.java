@@ -20,7 +20,7 @@ public class Repo {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://shielded-lowlands-62245.herokuapp.com/")
+                .baseUrl("http://kaulife.cafe24app.com")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
