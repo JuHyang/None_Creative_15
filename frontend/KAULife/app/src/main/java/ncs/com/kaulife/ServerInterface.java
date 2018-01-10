@@ -20,7 +20,7 @@ public interface ServerInterface {
 
     @POST("/login")
     @FormUrlEncoded
-    public Call<LoginReceiveData> LmsLogin(@Field("studentNum") String studentNum, @Field("password") String password);
+    public Call<String> LmsLogin(@Field("studentNum") String studentNum, @Field("password") String password);
 
 
 }

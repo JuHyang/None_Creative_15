@@ -63,16 +63,16 @@ public class SplashActivity extends Activity {
 
     public void LoginCheck (final LoginData loginData) {
         ServerInterface serverInterface = new Repo().getService();
-        Call<LoginReceiveData> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
-        c.enqueue(new Callback<LoginReceiveData>() {
+        Call<String> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
+        c.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<LoginReceiveData> call, Response<LoginReceiveData> response) {
-                LoginReceiveData loginReceiveData = response.body();
-                if (loginReceiveData.result.equals("1")) {
+            public void onResponse(Call<String> call, Response<String> response) {
+                String result = response.body();
+                if (result.equals("1")) {
                     Intent intent = new Intent (getApplicationContext(), LmsActivity.class);
                     startActivity(intent);
                     finish();
-                } else if (loginReceiveData.result.equals("0")) {
+                } else if (result.equals("0")) {
                     Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
@@ -81,7 +81,7 @@ public class SplashActivity extends Activity {
             }
 
             @Override
-            public void onFailure(Call<LoginReceiveData> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SplashActivity.this);
                 builder.setTitle("서버 오류");
                 builder.setMessage("현재 서버에 오류가 있습니다. 잠시 후 다시 시도해 주세요.");

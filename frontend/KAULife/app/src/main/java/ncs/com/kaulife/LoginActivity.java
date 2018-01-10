@@ -2,12 +2,18 @@ package ncs.com.kaulife;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -54,7 +60,6 @@ public class LoginActivity extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String studentNum = editTextId.getText().toString();
                 String password = editTextPwd.getText().toString();
                 Boolean auto = switchAuto.isChecked();
@@ -67,15 +72,18 @@ public class LoginActivity extends Activity {
     }
 
     public void LoginCheck (final LoginData loginData, final Boolean auto) {
+        final ProgressDialog dialog = ProgressDialog.show(this, "로그인", "잠시만 기다려주세요", true, true);
+        dialog.show();
         ServerInterface serverInterface = new Repo().getService();
-        Call<LoginReceiveData> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
-        c.enqueue(new Callback<LoginReceiveData>() {
+        Call<String> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
+        c.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<LoginReceiveData> call, Response<LoginReceiveData> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
+                dialog.dismiss();
                 Intent intent = new Intent (getApplicationContext(), LmsActivity.class);
 
-                LoginReceiveData loginReceiveData = response.body();
-                if (loginReceiveData.result.equals("1")) {
+                String result = response.body();
+                if (result.equals("1")) {
                     if (auto) {
                         if (loginDatas.size() != 0) {
                             LoginData temp = loginDatas.get(0);
@@ -96,13 +104,14 @@ public class LoginActivity extends Activity {
                     }
                     startActivity(intent);
                     finish();
-                } else if (loginReceiveData.result.equals("0")) {
+                } else if (result.equals("0")) {
                     Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<LoginReceiveData> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "서버에 오류가 있습니다. 잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show();
                 finish();
             }

@@ -3,6 +3,7 @@ package ncs.com.kaulife;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -111,13 +112,14 @@ public class LmsActivity extends AppCompatActivity {
 
     public void GetLmsData(LoginData loginData, final Boolean auto) {
         Log.d("확인", "GetLmsData 입장");
-
+        final ProgressDialog dialog = ProgressDialog.show(this, "", "잠시만 기다려주세요", true, true);
+        dialog.show();
         ServerInterface serverInterface = new Repo().getService();
         Call<ArrayList<LmsData>> c = serverInterface.GetLmsData(loginData.studentNum, loginData.password);
         c.enqueue(new Callback<ArrayList<LmsData>>() {
             @Override
             public void onResponse(Call<ArrayList<LmsData>> call, Response<ArrayList<LmsData>> response) {
-
+                dialog.dismiss();
                 ArrayList<LmsData> lmsDataTemp = response.body();
                 if (lmsDataTemp.size() != 0) {
                     for (int i = 0; i < lmsDataTemp.size(); i++) {
@@ -143,6 +145,7 @@ public class LmsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<LmsData>> call, Throwable t) {
+                dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "서버에 오류가 있습니다. 잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show();
             }
         });
@@ -169,13 +172,12 @@ public class LmsActivity extends AppCompatActivity {
 
         View actionBarView = LayoutInflater.from(this).inflate(R.layout.layout_actionbar, null);
 
-        btnSetting = (ImageButton) actionBarView.findViewById(R.id.btnSetting);
-        btnGetLmsData = (ImageButton) actionBarView.findViewById(R.id.btnGetLmsData);
+        btnSetting = actionBarView.findViewById(R.id.btnSetting);
+        btnGetLmsData = actionBarView.findViewById(R.id.btnGetLmsData);
 
         btnGetLmsData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "약간의 시간이 소요됩니다. 잠시만 기다려주세요.",Toast.LENGTH_LONG).show();
                 GetLmsData(loginData, auto);
             }
         });
@@ -212,7 +214,7 @@ public class LmsActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginData.delete();
+                LoginData.deleteAll(LoginData.class);
                 LmsData.deleteAll(LmsData.class);
                 Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
@@ -228,15 +230,16 @@ public class LmsActivity extends AppCompatActivity {
                 if (toggleAuto.isChecked()) {
                     Log.d("확인", "Dialog if 문 1입장");
                     loginData.lmsAuto = true;
-                    loginData.save();
                     AutoGetData();
                 } else if (toggleAuto.isChecked() == false && loginData.lmsAuto == true) {
                     Log.d("확인", "Dialog if 문 2입장");
                     AlarmCancel();
                     loginData.lmsAuto = false;
+                } else if (toggleAuto.isChecked() == false && loginData.lmsAuto == false) {
+                    loginData.lmsAuto = false;
                 }
-                loginData.lmsAuto = toggleAuto.isChecked();
                 loginData.save();
+
             }
         });
 

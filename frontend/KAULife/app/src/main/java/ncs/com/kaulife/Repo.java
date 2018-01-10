@@ -20,7 +20,7 @@ public class Repo {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://kaulife.cafe24app.com")
+                .baseUrl("http://13.125.96.188:8001")
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

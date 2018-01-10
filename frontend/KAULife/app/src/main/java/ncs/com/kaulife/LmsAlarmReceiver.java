@@ -38,19 +38,19 @@ public class LmsAlarmReceiver extends BroadcastReceiver {
 
     public void LoginCheck (final LoginData loginData, final Context context) {
         ServerInterface serverInterface = new Repo().getService();
-        Call<LoginReceiveData> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
-        c.enqueue(new Callback<LoginReceiveData>() {
+        Call<String> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
+        c.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<LoginReceiveData> call, Response<LoginReceiveData> response) {
-                LoginReceiveData loginReceiveData = response.body();
-                if (loginReceiveData.result.equals("1")) {
+            public void onResponse(Call<String> call, Response<String> response) {
+                String result = response.body();
+                if (result.equals("1")) {
                     GetLmsData(loginData, context);
-                } else if (loginReceiveData.result.equals("0")) {
+                } else if (result.equals("0")) {
                     GenerateNotification(context, "로그인에 실패하였습니다. 로그인 정보를 확인 해 주세요.");
                 }
             }
             @Override
-            public void onFailure(Call<LoginReceiveData> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
             }
         });
     }
