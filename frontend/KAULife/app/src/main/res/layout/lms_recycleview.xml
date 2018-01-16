@@ -8,50 +8,50 @@
 
 
     <TextView
-        android:id="@+id/textViewTime"
+        android:id="@+id/textViewTime_lms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="1dp"
-        android:text="textViewTime"
+        android:text="textViewTime_lms"
         android:textColor="@android:color/black"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
-        android:id="@+id/textViewSubject"
+        android:id="@+id/textViewSubject_lms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_weight="1"
-        android:text="textViewSubject"
+        android:text="textViewSubject_lms"
         android:textColor="@android:color/black"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewContent"
+        app:layout_constraintBottom_toTopOf="@+id/textViewContent_lms"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/textViewContent"
+        android:id="@+id/textViewContent_lms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_weight="1"
-        android:text="textViewContent"
+        android:text="textViewContent_lms"
         android:textColor="@android:color/black"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSubject" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewSubject_lms" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_centerInParent="true"
         android:background="#a9a9a9"
-        app:layout_constraintTop_toBottomOf="@+id/textViewContent"/>
+        app:layout_constraintTop_toBottomOf="@+id/textViewContent_lms"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -50,9 +50,9 @@ public class LmsAdapter extends RecyclerView.Adapter<LmsAdapter.ViewHolder> {
         TextView textViewContent;
         public ViewHolder(View itemView) {
             super(itemView);
-            textViewTime = itemView.findViewById(R.id.textViewTime);
-            textViewSubject = itemView.findViewById(R.id.textViewSubject);
-            textViewContent = itemView.findViewById(R.id.textViewContent);
+            textViewTime = itemView.findViewById(R.id.textViewTime_lms);
+            textViewSubject = itemView.findViewById(R.id.textViewSubject_lms);
+            textViewContent = itemView.findViewById(R.id.textViewContent_lms);
         }
     }
 }

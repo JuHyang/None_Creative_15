@@ -21,10 +21,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -170,7 +166,7 @@ public class LmsActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(false);
         actionBar.setDisplayShowTitleEnabled(false);
 
-        View actionBarView = LayoutInflater.from(this).inflate(R.layout.layout_actionbar, null);
+        View actionBarView = LayoutInflater.from(this).inflate(R.layout.lms_actionbar, null);
 
         btnSetting = actionBarView.findViewById(R.id.btnSetting);
         btnGetLmsData = actionBarView.findViewById(R.id.btnGetLmsData);

@@ -28,7 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".LmsActivity"
+        <activity
+            android:name=".LmsActivity"
             android:theme="@style/Theme.AppCompat" />
 
         <!-- Start SugarOrm(DB) information -->
@@ -46,9 +47,10 @@
             android:value="ncs.com.kaulife" />
         <!-- End SugarOrm(DB) information -->
 
+
         <!-- Start receiver information -->
         <receiver
-            android:name="ncs.com.kaulife.LmsAlarmReceiver"
+            android:name=".LmsAlarmReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -56,6 +58,10 @@
         </receiver>
         <!-- Start receiver information -->
 
+        <activity android:name=".MenuActivity" />
+        <activity android:name=".ScheduleMajorActivity" />
+        <activity android:name=".ScheduleListActivity" />
+        <activity android:name=".ScheduleTableActivity"></activity>
     </application>
 
 </manifest>
