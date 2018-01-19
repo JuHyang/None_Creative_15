@@ -21,6 +21,7 @@ public class ScheduleTableActivity extends AppCompatActivity {
         setContentView(R.layout.activity_schedule_table);
 
         initModel();
+        aboutView();
     }
 
     public void initView () {
@@ -72,7 +73,7 @@ public class ScheduleTableActivity extends AppCompatActivity {
 
     }
 
-    public void FillList () {
+    public void fillList () {
         for (int i = 0; i < scheduleDatas.size(); i ++) {
             String timeNum = scheduleDatas.get(i).timeNum;
             String[] timeNum_arr = timeNum.split("/");
@@ -93,5 +94,10 @@ public class ScheduleTableActivity extends AppCompatActivity {
 
         scheduleTableAdapter.notifyDataSetChanged();
 
+    }
+
+    public void aboutView () {
+        initView();
+        fillList();
     }
 }

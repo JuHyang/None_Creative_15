@@ -7,6 +7,34 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 import re
 
+def subjectNumvering (inform_subject) :
+    result = inform_subject
+    if "CU" in result or "DU" in result :
+        result += "00"
+        return result
+
+    if "인문자연" in result :
+        result += "1"
+
+    if "항우기" in result :
+        result += "2"
+    elif "소프트" in result :
+        result += "3"
+    elif "항공재료" in result :
+        result += "4"
+    elif "항교물" in result or "항공교통" in result or "항공우주법" in result or "물류" in result :
+        result += "5"
+    elif "항공운항" in result :
+        result += "6"
+    elif "영어" in result :
+        result += "7"
+    elif "경영" in result :
+        result += "8"
+    elif "항전정" in result :
+        result += "9"
+
+    return result
+
 year = "2017"
 hakgi = "20" ## 10 - 1학기 15 - 여름학기 20 - 2학기 25 - 겨울학기
 
@@ -32,7 +60,7 @@ for i in range (1, 48) :
     tr_0 = soup.find_all('tr', "tr_0")
     tr_1 = soup.find_all('tr', "tr_1")
 
-    tr_0 = tr_0[1:]
+    tr_0 = tr_0[1:-1]
 
     for j in tr_1 :
         temp_time = ""
@@ -47,6 +75,7 @@ for i in range (1, 48) :
             temp_time += m.group(1) + ","
         temp_time = temp_time.replace(" <br/> ", "/")
         temp_time = temp_time.replace("<br/>", "/")
+        temp_time = subjectNumvering(temp_time)
         temp_time += "\n"
         fhand = open(fname, "a", encoding="utf-8")
         fhand.write(temp_time)
@@ -65,6 +94,7 @@ for i in range (1, 48) :
             temp_time += m.group(1) + ","
         temp_time = temp_time.replace(" <br/> ", "/")
         temp_time = temp_time.replace("<br/>", "/")
+        temp_time = subjectNumvering(temp_time)
         temp_time += "\n"
         fhand = open(fname, "a", encoding="utf-8")
         fhand.write(temp_time)
