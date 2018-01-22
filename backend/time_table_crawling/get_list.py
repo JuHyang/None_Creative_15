@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+﻿#-*- coding: utf-8 -*-
 
 ##웹 크롤러를 이용한 소스코드 스크래핑 Selenium 을 이용함
 ##Selenium 은 웹 테스팅 모듈
@@ -7,7 +7,7 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 import re
 
-def subjectNumvering (inform_subject) :
+def subjectNumbering (inform_subject) :
     result = inform_subject
     if "CU" in result or "DU" in result :
         result += "00"
@@ -16,7 +16,7 @@ def subjectNumvering (inform_subject) :
     if "인문자연" in result :
         result += "1"
 
-    if "항우기" in result :
+    elif "항우기" in result :
         result += "2"
     elif "소프트" in result :
         result += "3"
@@ -75,7 +75,7 @@ for i in range (1, 48) :
             temp_time += m.group(1) + ","
         temp_time = temp_time.replace(" <br/> ", "/")
         temp_time = temp_time.replace("<br/>", "/")
-        temp_time = subjectNumvering(temp_time)
+        temp_time = subjectNumbering (temp_time)
         temp_time += "\n"
         fhand = open(fname, "a")
         fhand.write(temp_time)
@@ -94,7 +94,7 @@ for i in range (1, 48) :
             temp_time += m.group(1) + ","
         temp_time = temp_time.replace(" <br/> ", "/")
         temp_time = temp_time.replace("<br/>", "/")
-        temp_time = subjectNumvering(temp_time)
+        temp_time = subjectNumbering (temp_time)
         temp_time += "\n"
         fhand = open(fname, "a")
         fhand.write(temp_time)

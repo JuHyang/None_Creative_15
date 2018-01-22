@@ -16,13 +16,15 @@ public class ScheduleData extends SugarRecord<ScheduleData> {
     String time;
     String room;
     String target;
+    int label;
     String timeNum;
 
     public ScheduleData () {
 
     }
 
-    public ScheduleData (String subject, int grade, String category, int credit, String professor, String major, String time, String room, String target, String timeNum) {
+    public ScheduleData (String subject, int grade, String category, int credit, String professor,
+                         String major, String time, String room, String target, int label, String timeNum) {
         this.subject = subject;
         this.grade = grade;
         this.category = category;
@@ -32,6 +34,7 @@ public class ScheduleData extends SugarRecord<ScheduleData> {
         this.time = time;
         this.room = room;
         this.target = target;
+        this.label = label;
         this.timeNum = timeNum;
     }
 }

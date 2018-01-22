@@ -69,11 +69,12 @@ public class SplashActivity extends Activity {
             public void onResponse(Call<String> call, Response<String> response) {
                 String result = response.body();
                 if (result.equals("1")) {
-                    Intent intent = new Intent (getApplicationContext(), LmsActivity.class);
+                    Intent intent = new Intent (getApplicationContext(), MenuActivity.class);
                     startActivity(intent);
                     finish();
                 } else if (result.equals("0")) {
                     Toast.makeText(getApplicationContext(), "로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                    LoginData.deleteAll(LoginData.class);
                     Intent intent = new Intent (getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     finish();

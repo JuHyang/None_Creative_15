@@ -42,7 +42,7 @@ public class LoginActivity extends Activity {
         ActionBar actionBar = getActionBar();
         actionBar.hide();
 
-        aboutView();
+        AboutView();
     }
 
     public void initView () {
@@ -52,7 +52,7 @@ public class LoginActivity extends Activity {
         btnLogin = findViewById(R.id.btnLogin);
     }
 
-    public void aboutView () {
+    public void AboutView () {
         initView ();
 
         loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
@@ -80,7 +80,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 dialog.dismiss();
-                Intent intent = new Intent (getApplicationContext(), LmsActivity.class);
+                Intent intent = new Intent (getApplicationContext(), MenuActivity.class);
 
                 String result = response.body();
                 if (result.equals("1")) {

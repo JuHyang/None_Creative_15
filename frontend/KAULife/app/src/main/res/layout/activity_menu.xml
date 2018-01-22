@@ -6,4 +6,29 @@
     android:layout_height="match_parent"
     tools:context="ncs.com.kaulife.MenuActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <Button
+            android:id="@+id/btn_Lms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="btn_Lms" />
+
+        <Button
+            android:id="@+id/btn_Major"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="btn_Major" />
+
+        <Button
+            android:id="@+id/btn_Timetable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="btn_Timetable" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

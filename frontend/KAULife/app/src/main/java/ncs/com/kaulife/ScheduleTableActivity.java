@@ -20,19 +20,16 @@ public class ScheduleTableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_table);
 
-        initModel();
-        aboutView();
+        InitModel();
+        AboutView();
     }
 
-    public void initView () {
-        timeTableView = (RecyclerView) findViewById(R.id.tableRecyclerView);
+    public void InitView () {
+        timeTableView = findViewById(R.id.tableRecyclerView);
         timeTableView.setLayoutManager(new GridLayoutManager(this, 6));
     }
 
-    public void initModel () {
-
-        scheduleTableAdapter = new ScheduleTableAdapter(scheduleTableDatas);
-        timeTableView.setAdapter(scheduleTableAdapter);
+    public void InitModel () {
 
         int max = 0;
         scheduleDatas = (ArrayList) ScheduleData.listAll(ScheduleData.class);
@@ -73,10 +70,12 @@ public class ScheduleTableActivity extends AppCompatActivity {
 
     }
 
-    public void fillList () {
+    public void FillList () {
         for (int i = 0; i < scheduleDatas.size(); i ++) {
             String timeNum = scheduleDatas.get(i).timeNum;
             String[] timeNum_arr = timeNum.split("/");
+            String room = scheduleDatas.get(i).room;
+            String[] room_arr = room.split("/");
             for (int j = 0; j < timeNum_arr.length; j ++) {
                 String[] temp_arr = timeNum_arr[j].split(",");
                 ArrayList<Integer> indexList = new ArrayList<> ();
@@ -87,17 +86,18 @@ public class ScheduleTableActivity extends AppCompatActivity {
                     ScheduleTableData scheduleTableDatatemp = scheduleTableDatas.get(indexList.get(k));
                     scheduleTableDatatemp.subject = scheduleDatas.get(i).subject;
                     scheduleTableDatatemp.professor = scheduleDatas.get(i).professor;
-                    scheduleTableDatatemp.room = scheduleDatas.get(i).room;
+                    scheduleTableDatatemp.room = room_arr[j];
                 }
             }
         }
 
-        scheduleTableAdapter.notifyDataSetChanged();
-
     }
 
-    public void aboutView () {
-        initView();
-        fillList();
+    public void AboutView () {
+        InitView();
+        FillList();
+
+        scheduleTableAdapter = new ScheduleTableAdapter(scheduleTableDatas);
+        timeTableView.setAdapter(scheduleTableAdapter);
     }
 }

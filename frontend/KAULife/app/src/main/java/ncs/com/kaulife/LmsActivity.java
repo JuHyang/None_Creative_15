@@ -57,20 +57,20 @@ public class LmsActivity extends AppCompatActivity {
         InitModel();
         SetCustomActionBar();
         GetLmsData(loginData, auto);
-        aboutView();
+        AboutView();
     }
 
     protected void onResume () {
         super.onResume();
         InitModel();
-        aboutView();
+        AboutView();
     }
 
     public void InitView() {
         lmsRecyclerView = findViewById(R.id.lmsRecyclerView);
     }
 
-    public void aboutView() {
+    public void AboutView() {
         Log.d("확인", "aboutView 입장");
         InitView();
 
