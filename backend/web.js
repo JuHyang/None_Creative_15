@@ -284,12 +284,6 @@ app.post("/lms/data", function(req,res){
 
 });
 
-app.listen(8001, function (){
-  console.log ('Connected 8001 port!!!');
-});
-
-
-
 app.get('/schedule/:label', function(req,res){
   console.log("@" + req.method + " " + req.url);
   var label = req.params.label;
@@ -304,6 +298,30 @@ app.get('/schedule/:label', function(req,res){
       }
     }
   });
-
-
 })
+
+app.get('/DBupdate', function(req, res){
+  console.log("@" + req.method + " " + req.url);
+  //디비 삭제후 다시 디비 생성
+  var sql_del_table = 'DROP TABLE scheduledata';
+  conn.query(sql_del_table, function(err, result){
+    if(err) throw err;
+    console.log("Table deleted");
+  })
+
+  var sql_new_table = 'CREATE TABLE scheduledata (subject varchar(30), grade int(2), category varchar(20), credit int(2), professor varchar(30), major varchar(20), time varchar(40), room varchar(30), target varchar(20), label int(4))';
+  conn.query(sql_new_table, function (err, result){
+    if(err) throw err;
+    console.log("Table created");
+  });
+  //디비에 txt파일 업로드
+  var sql_load = "load data local infile 'list_timetable.txt' into table scheduledata fields terminated by ',' lines terminated by '\n'";
+  conn.query(sql_load, function (err, result){
+    if(err) throw err;
+    console.log("data load --> complete");
+  });
+})
+
+app.listen(8001, function (){
+  console.log ('Connected 8001 port!!!');
+});
