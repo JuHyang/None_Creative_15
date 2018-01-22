@@ -1,4 +1,4 @@
-﻿#-*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 
 ##웹 크롤러를 이용한 소스코드 스크래핑 Selenium 을 이용함
 ##Selenium 은 웹 테스팅 모듈
@@ -77,7 +77,7 @@ for i in range (1, 48) :
         temp_time = temp_time.replace("<br/>", "/")
         temp_time = subjectNumvering(temp_time)
         temp_time += "\n"
-        fhand = open(fname, "a", encoding="utf-8")
+        fhand = open(fname, "a")
         fhand.write(temp_time)
         fhand.close()
 
@@ -96,6 +96,6 @@ for i in range (1, 48) :
         temp_time = temp_time.replace("<br/>", "/")
         temp_time = subjectNumvering(temp_time)
         temp_time += "\n"
-        fhand = open(fname, "a", encoding="utf-8")
+        fhand = open(fname, "a")
         fhand.write(temp_time)
         fhand.close()

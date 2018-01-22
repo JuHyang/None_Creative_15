@@ -1,6 +1,16 @@
 ﻿var express = require ('express');
 var bodyParser = require('body-parser');
 const puppeteer = require('puppeteer');
+var mysql = require('mysql');
+
+var conn = mysql.createConnection({
+  host      : 'localhost',
+  user      : 'root',
+  password  : 'rlaqhdnjs96',
+  database  : 'ncs15'
+});
+
+conn.connect();
 
 var app = express();
 
@@ -277,3 +287,23 @@ app.post("/lms/data", function(req,res){
 app.listen(8001, function (){
   console.log ('Connected 8001 port!!!');
 });
+
+
+
+app.get('/schedule/:label', function(req,res){
+  console.log("@" + req.method + " " + req.url);
+  var label = req.params.label;
+  var sql_label = 'SELECT * FROM scheduledata where label=?';
+  conn.query(sql_label,[label], function(err, result_label, fields){
+    if(err){
+      console.log(err);
+    }
+    else {
+      if(label){
+        res.send(result_label);
+      }
+    }
+  });
+
+
+})
