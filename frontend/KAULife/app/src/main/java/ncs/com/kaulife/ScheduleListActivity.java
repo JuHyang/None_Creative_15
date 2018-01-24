@@ -23,35 +23,35 @@ import retrofit2.Response;
 
 public class ScheduleListActivity extends AppCompatActivity {
 
-    ArrayList<ScheduleData> scheduleDatas = new ArrayList<>();
+    private ArrayList<ScheduleData> scheduleDatas;
+    private String label;
 
-    RecyclerView scheduleRecyclerView;
-    RecyclerView.Adapter scheduleAdapter;
-    RecyclerView.LayoutManager scheduleLayoutManager;
+    private RecyclerView scheduleRecyclerView;
+    private RecyclerView.Adapter scheduleAdapter;
+    private RecyclerView.LayoutManager scheduleLayoutManager;
 
-    TextView textViewSubjectCheck, textViewGradeCheck, textViewCategoryCheck, textViewCreditCheck,
+    private TextView textViewSubjectCheck, textViewGradeCheck, textViewCategoryCheck, textViewCreditCheck,
             textViewProfessorCheck, textViewMajorCheck, textViewTimeCheck, textViewRoomCheck, textViewTargetCheck;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_list);
 
+        InitModel();
+        InitView();
         AboutView();
 
     }
 
-    public void InitView() {
-        scheduleRecyclerView = findViewById(R.id.scheduleRecyclerView);
+    public void InitModel () {
+        scheduleDatas = new ArrayList<> ();
+        Intent intent = getIntent();
+        label = intent.getStringExtra("label");
+        GetScheduleData(label);
     }
 
-    public void AboutView() {
-        InitView();
-
-        Intent intent = getIntent();
-        String label = intent.getStringExtra("label");
-
-        GetScheduleData(label);
-
+    public void InitView() {
+        scheduleRecyclerView = findViewById(R.id.scheduleRecyclerView);
         // in content do not change the layout size of the RecyclerView
         scheduleRecyclerView.setHasFixedSize(true);
 
@@ -62,7 +62,9 @@ public class ScheduleListActivity extends AppCompatActivity {
         // specify an adapter (see also next example)
         scheduleAdapter = new ScheduleListAdpater(scheduleDatas);
         scheduleRecyclerView.setAdapter(scheduleAdapter);
+    }
 
+    public void AboutView() {
         scheduleRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), scheduleRecyclerView,
                 new RecyclerItemClickListener.OnItemClickListener() {
             @Override
@@ -79,6 +81,7 @@ public class ScheduleListActivity extends AppCompatActivity {
     }
 
     public void GetScheduleData(String label) {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
         ServerInterface serverInterface = new Repo().getService();
         Call<ArrayList<ScheduleData>> c = serverInterface.GetScheduleData(label);
 
@@ -86,11 +89,22 @@ public class ScheduleListActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<ScheduleData>> call, Response<ArrayList<ScheduleData>> response) {
                 scheduleDatas.addAll(response.body());
+                scheduleAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(Call<ArrayList<ScheduleData>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "서버에 오류가 있습니다. 잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show();
+                alertDialogBuilder.setMessage("서버에 오류가 있습니다. 잠시 후 다시 시도해주세요")
+                        .setCancelable(false)
+                        .setPositiveButton("확인",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                    }
+                                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
     }
@@ -128,6 +142,7 @@ public class ScheduleListActivity extends AppCompatActivity {
         builder.setPositiveButton("등록", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getApplicationContext(), "시간표에 등록되었습니다",Toast.LENGTH_SHORT).show();
                 temp.save();
             }
         });
@@ -138,7 +153,7 @@ public class ScheduleListActivity extends AppCompatActivity {
             }
         });
 
-        builder.setTitle("설정");
+        builder.setTitle("등록");
         builder.setView(dialogLayout);
 
 

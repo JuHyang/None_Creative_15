@@ -56,7 +56,7 @@ public class LmsActivity extends AppCompatActivity {
 
         InitModel();
         SetCustomActionBar();
-        GetLmsData(loginData, auto);
+        InitView();
         AboutView();
     }
 
@@ -68,14 +68,6 @@ public class LmsActivity extends AppCompatActivity {
 
     public void InitView() {
         lmsRecyclerView = findViewById(R.id.lmsRecyclerView);
-    }
-
-    public void AboutView() {
-        Log.d("확인", "aboutView 입장");
-        InitView();
-
-        Collections.reverse(lmsDatas);
-
         // in content do not change the layout size of the RecyclerView
         lmsRecyclerView.setHasFixedSize(true);
 
@@ -88,8 +80,11 @@ public class LmsActivity extends AppCompatActivity {
         lmsRecyclerView.setAdapter(lmsAdapter);
     }
 
+    public void AboutView() {}
+
     public void InitModel () {
         loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
+        Collections.reverse(lmsDatas);
         lmsDatas = (ArrayList) LmsData.listAll(LmsData.class);
 
 
@@ -103,12 +98,13 @@ public class LmsActivity extends AppCompatActivity {
             loginData = loginDatas.get(0);
             auto = true;
         }
-
+        GetLmsData(loginData, auto);
     }
 
     public void GetLmsData(LoginData loginData, final Boolean auto) {
-        Log.d("확인", "GetLmsData 입장");
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
         final ProgressDialog dialog = ProgressDialog.show(this, "", "잠시만 기다려주세요", true, true);
+        dialog.setCancelable(false);
         dialog.show();
         ServerInterface serverInterface = new Repo().getService();
         Call<ArrayList<LmsData>> c = serverInterface.GetLmsData(loginData.studentNum, loginData.password);
@@ -142,7 +138,17 @@ public class LmsActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<LmsData>> call, Throwable t) {
                 dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "서버에 오류가 있습니다. 잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show();
+                alertDialogBuilder.setMessage("서버에 오류가 있습니다. 잠시 후 다시 시도해주세요")
+                        .setCancelable(false)
+                        .setPositiveButton("확인",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                    }
+                                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
 

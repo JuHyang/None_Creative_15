@@ -1,0 +1,48 @@
+@POST
+("/login")  >> 보내는것 String studentNum, String password
+반환형 : String
+로그인 성공시 "1"
+로그인 실패시 "0"
+
+@POST
+("/lms/data") >> 보내는것 String studentNum, String password
+반환형 JsonArray
+LmsData (String time, String subject, String content) 의 배열 >> 새글 알림이 있는것만 받음
+만약 아무것도 새글이 없을 경우에 비어있는 배열을 보냄 []
+
+오후 9:29 2018-01-14 
+Content 안에는 [포럼] or [과제] 를 붙여서 구분이 가능하도록 변경.
+time 은 [포럼]의 경우에는 알림 시간, [과제] 의 경우에는 마감시간을 같이 받도록 한다.
+
+@GET
+("/schedule/{학과}")
+{학과} 에는 밑의 숫자가 문자열로 들어감.
+
+인문자연학부	liberal		1
+항우기학부	mechanical		2
+소프트		software		3
+항공재료	material		4
+항교물		trasport		5
+항공운항	flight		6
+영어		english		7
+경영학부	business		8
+항전정학부	electronic		9
+
+HCU		
+SDU		cyber		00
+ICU
+
+각 학과에 맞는 강의 정보를 받음. json 의 배열로 받음.
+
+@GET
+("/DBupdate")
+txt에 해당되는 내용으로 table의 내용 변경.
+
+@POST
+("/grade/now") >> 보내는것 String studentNum, String password
+반환형 JsonArray
+GradeData (String subject, String grade, String hakgi, int credit, int ranking) 의 배열 >> 전체 성적 반환
+hakgi 는 oooo년 oo학기
+	ex) 2017년 겨울학기
+	    2015년 1 학기
+	    2015년 2 학기

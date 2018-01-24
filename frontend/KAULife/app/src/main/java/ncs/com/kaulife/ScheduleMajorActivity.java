@@ -28,6 +28,7 @@ public class ScheduleMajorActivity extends Activity {
         ActionBar actionBar = getActionBar();
         actionBar.hide();
 
+        InitView();
         AboutView();
     }
 
@@ -45,7 +46,6 @@ public class ScheduleMajorActivity extends Activity {
     }
 
     public void AboutView () {
-        InitView();
         final Intent intent = new Intent (getApplicationContext(), ScheduleListActivity.class);
         btn_liberal.setOnClickListener(new View.OnClickListener() {
             @Override

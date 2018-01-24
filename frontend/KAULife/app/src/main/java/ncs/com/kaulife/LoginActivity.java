@@ -2,8 +2,10 @@ package ncs.com.kaulife;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -28,23 +30,28 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends Activity {
-    EditText editTextId;
-    EditText editTextPwd;
-    Switch switchAuto;
-    Button btnLogin;
-    ArrayList<LoginData> loginDatas;
+    private EditText editTextId;
+    private EditText editTextPwd;
+    private Switch switchAuto;
+    private Button btnLogin;
+    private ArrayList<LoginData> loginDatas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         ActionBar actionBar = getActionBar();
         actionBar.hide();
 
+        InitModel();
+        initView ();
         AboutView();
     }
 
+    public void InitModel () {
+        loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
+
+    }
     public void initView () {
         editTextId = findViewById(R.id.editTextId);
         editTextPwd = findViewById(R.id.editTextPwd);
@@ -53,10 +60,6 @@ public class LoginActivity extends Activity {
     }
 
     public void AboutView () {
-        initView ();
-
-        loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,13 +69,14 @@ public class LoginActivity extends Activity {
 
                 LoginData loginData = new LoginData(studentNum, password, false);
                 LoginCheck(loginData, auto);
-
             }
         });
     }
 
     public void LoginCheck (final LoginData loginData, final Boolean auto) {
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
         final ProgressDialog dialog = ProgressDialog.show(this, "로그인", "잠시만 기다려주세요", true, true);
+        dialog.setCancelable(false);
         dialog.show();
         ServerInterface serverInterface = new Repo().getService();
         Call<String> c = serverInterface.LmsLogin(loginData.studentNum, loginData.password);
@@ -112,8 +116,18 @@ public class LoginActivity extends Activity {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "서버에 오류가 있습니다. 잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show();
-                finish();
+                alertDialogBuilder.setMessage("서버에 오류가 있습니다. 잠시 후 다시 시도해주세요")
+                        .setCancelable(false)
+                        .setPositiveButton("확인",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                    }
+                                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
             }
         });
 

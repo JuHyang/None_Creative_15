@@ -12,14 +12,15 @@ import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity {
 
-    Button btnLms, btnMajor, btnTimetable;
-    ArrayList<LoginData> loginDatas;
+    private Button btnLms, btnMajor, btnTimetable, btnGradeNow;
+    private ArrayList<LoginData> loginDatas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        InitView();
         AboutView();
 
     }
@@ -28,11 +29,10 @@ public class MenuActivity extends AppCompatActivity {
         btnLms = findViewById(R.id.btn_Lms);
         btnMajor = findViewById(R.id.btn_Major);
         btnTimetable = findViewById(R.id.btn_Timetable);
+        btnGradeNow = findViewById(R.id.btn_GradeNow);
     }
 
     public void AboutView () {
-        InitView();
-
         btnLms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +64,25 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent (getApplicationContext(), ScheduleTableActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnGradeNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
+
+                Intent intent = new Intent (getApplicationContext(), GradeNowActivity.class);
+                if (loginDatas.size() == 0) {
+                    Intent beforeIntent = getIntent();
+                    String studentNum = beforeIntent.getStringExtra("id");
+                    String password = beforeIntent.getStringExtra("password");
+
+                    intent.putExtra("id", studentNum);
+                    intent.putExtra("password", password);
+                }
+
                 startActivity(intent);
             }
         });

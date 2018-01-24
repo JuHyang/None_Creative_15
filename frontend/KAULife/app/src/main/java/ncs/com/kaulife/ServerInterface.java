@@ -27,5 +27,9 @@ public interface ServerInterface {
     @GET("/schedule/{label}")
     public Call<ArrayList<ScheduleData>> GetScheduleData (@Path("label") String label);
 
+    @POST("/grade/now")
+    @FormUrlEncoded
+    public Call<ArrayList<GradeData>> GetGradeNow (@Field("studentNum") String studentNum, @Field("password") String password);
+
 
 }
