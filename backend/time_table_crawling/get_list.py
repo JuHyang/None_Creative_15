@@ -35,8 +35,8 @@ def subjectNumbering (inform_subject) :
 
     return result
 
-year = "2017"
-hakgi = "20" ## 10 - 1학기 15 - 여름학기 20 - 2학기 25 - 겨울학기
+year = "2018"
+hakgi = "10" ## 10 - 1학기 15 - 여름학기 20 - 2학기 25 - 겨울학기
 
 driver = webdriver.Chrome () ##selenium 사용을 위한 crhome driver 연결
 
@@ -53,7 +53,7 @@ p = re.compile(r">(.*)<")
 fname = "list_timetable.txt"
 
 for i in range (1, 48) :
-    driver.get('https://portal.kau.ac.kr/sugang/LectDeptSchTop.jsp?year=2017&hakgi=20&hakgwa_name=%C7%D0%BA%CE&hakgwa_code=A0000&gwamok_name=&selhaknyun=%&selyoil=%&jojik_code=A0000&nowPage=' + str(i))
+    driver.get('https://portal.kau.ac.kr/sugang/LectDeptSchTop.jsp?year=' + year + '&hakgi=' + hakgi + '&hakgwa_name=%C7%D0%BA%CE&hakgwa_code=A0000&gwamok_name=&selhaknyun=%&selyoil=%&jojik_code=A0000&nowPage=' + str(i))
 
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
@@ -62,7 +62,15 @@ for i in range (1, 48) :
 
     tr_0 = tr_0[1:-1]
 
-    for j in tr_1 :
+    max_index = max(len(tr_0), len(tr_1))
+    tr_list = list()
+    for i in range (max_index) :
+        if i < len(tr_1) :
+            tr_list.append(tr_1[i])
+        if i < len(tr_0) :
+            tr_list.append(tr_0[i])
+
+    for j in tr_list :
         temp_time = ""
         list_str = str(j).split("\n")
         list_str = list_str[8:22]
@@ -77,25 +85,8 @@ for i in range (1, 48) :
         temp_time = temp_time.replace("<br/>", "/")
         temp_time = subjectNumbering (temp_time)
         temp_time += "\n"
-        fhand = open(fname, "a")
+        fhand = open(fname, "a", encoding="utf-8")
         fhand.write(temp_time)
         fhand.close()
 
-    for j in tr_0 :
-        temp_time = ""
-        list_str = str(j).split("\n")
-        list_str = list_str[8 : 22]
-        for k in list_index :
-            if list_str[k] == "" :
-                continue
-            if list_str[k] == '<td align="left">' :
-                list_str[k] = list_str[7]
-            m = p.search(list_str[k])
-            temp_time += m.group(1) + ","
-        temp_time = temp_time.replace(" <br/> ", "/")
-        temp_time = temp_time.replace("<br/>", "/")
-        temp_time = subjectNumbering (temp_time)
-        temp_time += "\n"
-        fhand = open(fname, "a")
-        fhand.write(temp_time)
-        fhand.close()
+

@@ -101,7 +101,9 @@ public class ScheduleTableActivity extends AppCompatActivity {
                     ScheduleTableData scheduleTableDatatemp = scheduleTableDatas.get(indexList.get(k));
                     scheduleTableDatatemp.subject = scheduleDatas.get(i).subject;
                     scheduleTableDatatemp.professor = scheduleDatas.get(i).professor;
-                    scheduleTableDatatemp.room = room_arr[j];
+                    if (!(room_arr[0].equals(""))) {
+                        scheduleTableDatatemp.room = room_arr[j];
+                    }
                 }
             }
         }
@@ -112,7 +114,7 @@ public class ScheduleTableActivity extends AppCompatActivity {
         btn_TableRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ScheduleTableActivity.this);
                 alertDialogBuilder.setTitle("초기화")
                         .setMessage("시간표를 초기화 하시겠습니까 ?")
                         .setPositiveButton("삭제",
@@ -121,6 +123,13 @@ public class ScheduleTableActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         ScheduleData.deleteAll(ScheduleData.class);
                                         scheduleDatas.clear();
+                                        scheduleTableDatas.clear();
+                                        scheduleTableDatas.add(new ScheduleTableData (""));
+                                        scheduleTableDatas.add(new ScheduleTableData ("월"));
+                                        scheduleTableDatas.add(new ScheduleTableData ("화"));
+                                        scheduleTableDatas.add(new ScheduleTableData ("수"));
+                                        scheduleTableDatas.add(new ScheduleTableData ("목"));
+                                        scheduleTableDatas.add(new ScheduleTableData ("금"));
                                         scheduleTableAdapter.notifyDataSetChanged();
                                     }
                                 })
@@ -138,7 +147,7 @@ public class ScheduleTableActivity extends AppCompatActivity {
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, final int position) {
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ScheduleTableActivity.this);
                         alertDialogBuilder.setTitle("삭제")
                                 .setMessage(scheduleTableDatas.get(position).subject + "를 시간표에서 삭제 하시겠습니까 ?")
                                 .setPositiveButton("확인",

@@ -68,23 +68,23 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        btnGradeNow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
-
-                Intent intent = new Intent (getApplicationContext(), GradeNowActivity.class);
-                if (loginDatas.size() == 0) {
-                    Intent beforeIntent = getIntent();
-                    String studentNum = beforeIntent.getStringExtra("id");
-                    String password = beforeIntent.getStringExtra("password");
-
-                    intent.putExtra("id", studentNum);
-                    intent.putExtra("password", password);
-                }
-
-                startActivity(intent);
-            }
-        });
+//        btnGradeNow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
+//
+//                Intent intent = new Intent (getApplicationContext(), GradeNowActivity.class);
+//                if (loginDatas.size() == 0) {
+//                    Intent beforeIntent = getIntent();
+//                    String studentNum = beforeIntent.getStringExtra("id");
+//                    String password = beforeIntent.getStringExtra("password");
+//
+//                    intent.putExtra("id", studentNum);
+//                    intent.putExtra("password", password);
+//                }
+//
+//                startActivity(intent);
+//            }
+//        });
     }
 }

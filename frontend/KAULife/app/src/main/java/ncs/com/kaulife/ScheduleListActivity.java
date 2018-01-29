@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +26,7 @@ import retrofit2.Response;
 public class ScheduleListActivity extends AppCompatActivity {
 
     private ArrayList<ScheduleData> scheduleDatas;
+    private ArrayList<ScheduleData> scheduleDatasAlready;
     private String label;
 
     private RecyclerView scheduleRecyclerView;
@@ -139,13 +142,16 @@ public class ScheduleListActivity extends AppCompatActivity {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ScheduleListActivity.this);
-        builder.setPositiveButton("등록", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "시간표에 등록되었습니다",Toast.LENGTH_SHORT).show();
-                temp.save();
-            }
-        });
+        if (CheckIndex(temp.subject, timeNum)) {
+            builder.setPositiveButton("등록", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    Toast.makeText(getApplicationContext(), "시간표에 등록되었습니다", Toast.LENGTH_SHORT).show();
+                    temp.save();
+                }
+            });
+        }
         builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -163,6 +169,9 @@ public class ScheduleListActivity extends AppCompatActivity {
     }
 
     public String ChangeTimeForm (String time) {
+        if (time.equals("")) {
+            return "";
+        }
         int index = 0;
         String result = "";
 
@@ -212,5 +221,43 @@ public class ScheduleListActivity extends AppCompatActivity {
         }
 
         return result;
+    }
+
+    public boolean CheckIndex (String subject, String timeNumInput) {
+        if (timeNumInput.equals("")){
+            return false;
+        }
+        ArrayList<Integer> inputIndex = new ArrayList<>();
+        String[] timeNumInput_arr = timeNumInput.split("/");
+        for (int i = 0; i < timeNumInput_arr.length; i ++) {
+            String[] timeNumInput_temp = timeNumInput_arr[i].split(",");
+            for (int j = 0; j < timeNumInput_temp.length; j ++) {
+                inputIndex.add(Integer.parseInt(timeNumInput_temp[i]));
+            }
+        }
+
+        scheduleDatasAlready = (ArrayList) ScheduleData.listAll(ScheduleData.class);
+        for (int i = 0; i < scheduleDatasAlready.size(); i ++) {
+            if (scheduleDatasAlready.get(i).subject.equals(subject)) {
+                return false;
+            }
+            String timeNum = scheduleDatasAlready.get(i).timeNum;
+            String[] timeNum_arr = timeNum.split("/");
+            for (int j = 0; j < timeNum_arr.length; j ++) {
+                String[] temp_arr = timeNum_arr[j].split(",");
+                ArrayList<Integer> indexList = new ArrayList<> ();
+                for (int k = 0; k < temp_arr.length; k++) {
+                    indexList.add(Integer.parseInt(temp_arr[k]));
+                }
+                for (int k = 0; k < indexList.size(); k++) {
+                    for (int o = 0; o < inputIndex.size(); o ++) {
+                        if (indexList.get(k) == inputIndex.get(o)) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 }
