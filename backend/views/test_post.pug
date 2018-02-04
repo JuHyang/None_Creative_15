@@ -20,3 +20,20 @@ html
       p
         input(type = 'submit')
     h4 3. schedule sheet
+    h4 4. DBupdate
+    h4 5. alert recent grade
+    form(action='/grade/now' method = 'post')
+      p
+        input(type = 'text' name = 'studentNum')
+      p
+        input(type = 'password' name = 'password')
+      p
+        input(type = 'submit')
+    h4 6. alert last grade
+    form(action='/grade/last' method = 'post')
+      p
+        input(type = 'text' name = 'studentNum')
+      p
+        input(type = 'password' name = 'password')
+      p
+        input(type = 'submit')
