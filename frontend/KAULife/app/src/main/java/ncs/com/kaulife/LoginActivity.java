@@ -67,7 +67,7 @@ public class LoginActivity extends Activity {
                 String password = editTextPwd.getText().toString();
                 Boolean auto = switchAuto.isChecked();
 
-                LoginData loginData = new LoginData(studentNum, password, false);
+                LoginData loginData = new LoginData(studentNum, password, false, false);
                 LoginCheck(loginData, auto);
             }
         });

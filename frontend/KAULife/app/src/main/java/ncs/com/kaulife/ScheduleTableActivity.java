@@ -16,7 +16,7 @@ public class ScheduleTableActivity extends AppCompatActivity {
 
     private RecyclerView timeTableView;
     private RecyclerView.Adapter scheduleTableAdapter;
-    private ArrayList<ScheduleTableData> scheduleTableDatas;
+    private ArrayList<ScheduleTableData> scheduleTableDatas = new ArrayList<>();
     private ArrayList<ScheduleData> scheduleDatas;
 
     private Button btn_TableRefresh;
@@ -43,7 +43,7 @@ public class ScheduleTableActivity extends AppCompatActivity {
     public void InitModel () {
         int max = 0;
 
-        scheduleTableDatas = new ArrayList<>();
+        scheduleTableDatas.clear();
         scheduleDatas = (ArrayList) ScheduleData.listAll(ScheduleData.class);
 
         scheduleTableDatas.add(new ScheduleTableData (""));
@@ -122,14 +122,15 @@ public class ScheduleTableActivity extends AppCompatActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         ScheduleData.deleteAll(ScheduleData.class);
-                                        scheduleDatas.clear();
-                                        scheduleTableDatas.clear();
-                                        scheduleTableDatas.add(new ScheduleTableData (""));
-                                        scheduleTableDatas.add(new ScheduleTableData ("월"));
-                                        scheduleTableDatas.add(new ScheduleTableData ("화"));
-                                        scheduleTableDatas.add(new ScheduleTableData ("수"));
-                                        scheduleTableDatas.add(new ScheduleTableData ("목"));
-                                        scheduleTableDatas.add(new ScheduleTableData ("금"));
+                                        InitModel();
+//                                        scheduleDatas.clear();
+//                                        scheduleTableDatas.clear();
+//                                        scheduleTableDatas.add(new ScheduleTableData (""));
+//                                        scheduleTableDatas.add(new ScheduleTableData ("월"));
+//                                        scheduleTableDatas.add(new ScheduleTableData ("화"));
+//                                        scheduleTableDatas.add(new ScheduleTableData ("수"));
+//                                        scheduleTableDatas.add(new ScheduleTableData ("목"));
+//                                        scheduleTableDatas.add(new ScheduleTableData ("금"));
                                         scheduleTableAdapter.notifyDataSetChanged();
                                     }
                                 })

@@ -10,8 +10,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <permission android:name="android.permission.INTERNET" />
-
     <!-- [END retrofit_permission] -->
+
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
@@ -20,17 +20,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".LoginActivity" />
-        <activity
-            android:name=".LmsActivity"
-            android:theme="@style/Theme.AppCompat" />
 
         <!-- Start SugarOrm(DB) information -->
         <meta-data
@@ -47,7 +36,6 @@
             android:value="ncs.com.kaulife" />
         <!-- End SugarOrm(DB) information -->
 
-
         <!-- Start receiver information -->
         <receiver
             android:name=".LmsAlarmReceiver"
@@ -56,8 +44,27 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".GradeAlarmReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
         <!-- Start receiver information -->
 
+
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".LmsActivity"
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".MenuActivity"
             android:theme="@style/Theme.AppCompat" />
@@ -68,7 +75,9 @@
         <activity
             android:name=".ScheduleTableActivity"
             android:theme="@style/Theme.AppCompat" />
-        <activity android:name=".GradeNowActivity"></activity>
+        <activity
+            android:name=".GradeNowActivity"
+            android:theme="@style/Theme.AppCompat"/>
     </application>
 
 </manifest>

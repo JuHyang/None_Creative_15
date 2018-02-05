@@ -55,7 +55,16 @@
             android:id="@+id/textViewRoomList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
             android:text="강의실" />
+
+        <TextView
+            android:id="@+id/textViewTargetList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+
     </LinearLayout>
     <View
         android:layout_width="match_parent"

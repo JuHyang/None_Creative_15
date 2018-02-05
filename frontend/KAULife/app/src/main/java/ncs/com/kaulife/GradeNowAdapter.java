@@ -34,7 +34,9 @@ public class GradeNowAdapter extends RecyclerView.Adapter<GradeNowAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         GradeData temp = gradeDatas.get(position);
-
+        holder.textViewSubjectNow.setText(temp.subject);
+        holder.textViewCreditNow.setText(String.valueOf(temp.credit));
+        holder.textViewGradeNow.setText(temp.grade);
     }
 
     @Override
@@ -45,11 +47,14 @@ public class GradeNowAdapter extends RecyclerView.Adapter<GradeNowAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewSubjectNow;
+        TextView textViewCreditNow;
         TextView textViewGradeNow;
         public ViewHolder(View itemView) {
             super(itemView);
             textViewSubjectNow = itemView.findViewById(R.id.textViewSubjectNow);
+            textViewCreditNow = itemView.findViewById(R.id.textViewCreditNow);
             textViewGradeNow = itemView.findViewById(R.id.textViewGradeNow);
+
         }
     }
 

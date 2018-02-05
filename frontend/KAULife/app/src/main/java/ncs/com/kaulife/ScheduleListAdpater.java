@@ -23,7 +23,7 @@ public class ScheduleListAdpater extends RecyclerView.Adapter<ScheduleListAdpate
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.schedule_recyclerview, parent, false);
+                .inflate(R.layout.schedule_list_recyclerview, parent, false);
         // set the view's size, margins, paddings and layout parameters
 
         ViewHolder vh = new ViewHolder(v);
@@ -39,6 +39,9 @@ public class ScheduleListAdpater extends RecyclerView.Adapter<ScheduleListAdpate
         holder.textViewProfessorList.setText(temp.professor);
         holder.textViewTimeList.setText(temp.time);
         holder.textViewRoomList.setText(temp.room);
+        if (temp.major.equals("인문자연학부")) {
+            holder.textViewTargetList.setText(temp.target);
+        }
     }
 
     @Override
@@ -54,6 +57,7 @@ public class ScheduleListAdpater extends RecyclerView.Adapter<ScheduleListAdpate
         TextView textViewProfessorList;
         TextView textViewTimeList;
         TextView textViewRoomList;
+        TextView textViewTargetList;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +67,7 @@ public class ScheduleListAdpater extends RecyclerView.Adapter<ScheduleListAdpate
             textViewProfessorList = itemView.findViewById(R.id.textViewProfessorList);
             textViewTimeList = itemView.findViewById(R.id.textViewTimeList);
             textViewRoomList = itemView.findViewById(R.id.textViewRoomList);
+            textViewTargetList = itemView.findViewById(R.id.textViewTargetList);
         }
     }
 }

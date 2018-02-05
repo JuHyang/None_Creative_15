@@ -40,7 +40,7 @@ public class GradeNowActivity extends AppCompatActivity {
     }
     public void InitModel() {
         loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
-        gradeDatas = (ArrayList) GradeData.listAll(LoginData.class);
+        gradeDatas = (ArrayList) GradeData.listAll(GradeData.class);
 
         GetGradeData ();
 

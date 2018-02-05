@@ -47,6 +47,8 @@ public class LmsAlarmReceiver extends BroadcastReceiver {
                     GetLmsData(loginData, context);
                 } else if (result.equals("0")) {
                     GenerateNotification(context, "로그인에 실패하였습니다. 로그인 정보를 확인 해 주세요.");
+                    loginData.lmsAuto = false;
+                    loginData.save();
                 }
             }
             @Override
