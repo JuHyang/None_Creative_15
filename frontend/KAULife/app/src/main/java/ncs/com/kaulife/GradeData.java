@@ -6,7 +6,7 @@ import com.orm.SugarRecord;
  * Created by kkss2 on 2018-01-24.
  */
 
-public class GradeData extends SugarRecord<GradeData> {
+public class GradeData extends SugarRecord {
     String subject;
     String grade;
     String hakgi;

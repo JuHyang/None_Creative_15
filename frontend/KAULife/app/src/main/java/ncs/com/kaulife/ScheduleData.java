@@ -1,12 +1,14 @@
 package ncs.com.kaulife;
 
+import android.graphics.Color;
+
 import com.orm.SugarRecord;
 
 /**
  * Created by kkss2 on 2018-01-15.
  */
 
-public class ScheduleData extends SugarRecord<ScheduleData> {
+public class ScheduleData extends SugarRecord{
     String subject;
     int grade;
     String category;

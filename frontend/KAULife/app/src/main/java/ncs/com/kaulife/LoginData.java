@@ -6,7 +6,7 @@ import com.orm.SugarRecord;
  * Created by kkss2 on 2017-11-12.
  */
 
-public class LoginData extends SugarRecord<LoginData> {
+public class LoginData extends SugarRecord {
     String studentNum;
     String password;
     boolean lmsAuto = false;

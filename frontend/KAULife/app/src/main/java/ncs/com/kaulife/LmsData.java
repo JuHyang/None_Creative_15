@@ -6,7 +6,7 @@ import com.orm.SugarRecord;
  * Created by kkss2 on 2017-11-12.
  */
 
-public class LmsData extends SugarRecord<LmsData> {
+public class LmsData extends SugarRecord{
     String subject;
     String time;
     String content;

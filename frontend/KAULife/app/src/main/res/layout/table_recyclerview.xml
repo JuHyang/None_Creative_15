@@ -4,37 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:layout_editor_absoluteY="81dp">
+    android:id="@+id/tableView">
 
-    <TextView
-        android:id="@+id/textViewSubject_table"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
-        android:text="textViewSUvject_table"
-        android:textColor="@android:color/black"
-        android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
-    <TextView
-        android:id="@+id/textViewProfessor_table"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="textViewProfessor_table"
-        android:textColor="@android:color/black"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/textViewSubject_table"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textViewSubject_table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="textViewSubject_table"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"/>
 
-    <TextView
-        android:id="@+id/textViewRoom_table"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="textViewRoom_table"
-        android:textColor="@android:color/black"
-        android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@+id/textViewProfessor_table"
-        app:layout_constraintTop_toBottomOf="@+id/textViewProfessor_table" />
+        <TextView
+            android:id="@+id/textViewProfessor_table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="textViewProfessor_table"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"/>
+
+        <TextView
+            android:id="@+id/textViewRoom_table"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="textViewRoom_table"
+            android:textColor="@android:color/black"
+            android:textSize="10sp"/>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -1,9 +1,13 @@
 package ncs.com.kaulife;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -36,6 +40,7 @@ public class ScheduleTableAdapter extends RecyclerView.Adapter<ScheduleTableAdap
         holder.textViewSubject.setText(temp.subject);
         holder.textViewProfessor.setText(temp.professor);
         holder.textViewRoom.setText(temp.room);
+        holder.tableView.setBackgroundColor(temp.color);
     }
 
     @Override
@@ -45,11 +50,13 @@ public class ScheduleTableAdapter extends RecyclerView.Adapter<ScheduleTableAdap
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        ConstraintLayout tableView;
         TextView textViewSubject;
         TextView textViewProfessor;
         TextView textViewRoom;
         public ViewHolder(View itemView) {
             super(itemView);
+            tableView = itemView.findViewById(R.id.tableView);
             textViewSubject = itemView.findViewById(R.id.textViewSubject_table);
             textViewProfessor = itemView.findViewById(R.id.textViewProfessor_table);
             textViewRoom = itemView.findViewById(R.id.textViewRoom_table);

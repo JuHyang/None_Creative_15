@@ -6,7 +6,7 @@ import com.orm.SugarRecord;
  * Created by kkss2 on 2017-11-12.
  */
 
-public class LmsSetData extends SugarRecord<LmsSetData> {
+public class LmsSetData extends SugarRecord{
     boolean status;
 
     public LmsSetData () {

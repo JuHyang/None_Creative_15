@@ -62,11 +62,15 @@ public class GradeNowActivity extends AppCompatActivity {
         textViewSemesterNow = findViewById(R.id.textViewSemesterNow);
     }
 
-    public void AboutView () {}
+    public void AboutView () {
+        if (gradeDatas.size() != 0) {
+            textViewSemesterNow.setText(gradeDatas.get(0).hakgi);
+        }
+    }
 
     public void GetGradeData() {
 
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(GradeNowActivity.this);
 
         if (loginDatas.size() == 0) {
             Intent intent = getIntent();

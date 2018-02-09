@@ -1,5 +1,7 @@
 package ncs.com.kaulife;
 
+import android.graphics.Color;
+
 import com.orm.SugarRecord;
 
 /**
@@ -10,6 +12,8 @@ public class ScheduleTableData {
     String subject;
     String professor;
     String room;
+    int color = Color.rgb(255,255,255);
+
 
     public ScheduleTableData () {
         this.subject = "";
