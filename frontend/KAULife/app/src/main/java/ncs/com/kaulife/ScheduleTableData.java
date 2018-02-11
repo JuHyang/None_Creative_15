@@ -12,7 +12,7 @@ public class ScheduleTableData {
     String subject;
     String professor;
     String room;
-    int color = Color.rgb(255,255,255);
+    int color = Color.rgb(240,240,240);
 
 
     public ScheduleTableData () {

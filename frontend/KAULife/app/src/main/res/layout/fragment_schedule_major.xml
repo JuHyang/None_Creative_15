@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F0F0">
+
+
+
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_marginRight="50dp"
+            android:id="@+id/btn_liberal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="교양"/>
+
+        <Button
+            android:id="@+id/btn_cyber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="싸강" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_marginRight="50dp"
+            android:id="@+id/btn_mechanical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="기계"/>
+
+        <Button
+            android:id="@+id/btn_software"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="소프트"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_marginRight="50dp"
+            android:id="@+id/btn_material"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="재료"/>
+
+        <Button
+            android:id="@+id/btn_transport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="교물" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_marginRight="50dp"
+            android:id="@+id/btn_flight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="운항" />
+
+        <Button
+            android:id="@+id/btn_english"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="영어"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_marginRight="50dp"
+            android:id="@+id/btn_business"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="경영" />
+
+        <Button
+            android:id="@+id/btn_electronic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="전자" />
+
+    </LinearLayout>
+
+</LinearLayout>

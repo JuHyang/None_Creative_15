@@ -84,7 +84,7 @@ public class LoginActivity extends Activity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 dialog.dismiss();
-                Intent intent = new Intent (getApplicationContext(), MenuActivity.class);
+                Intent intent = new Intent (getApplicationContext(), MainActivity.class);
 
                 String result = response.body();
                 if (result.equals("1")) {

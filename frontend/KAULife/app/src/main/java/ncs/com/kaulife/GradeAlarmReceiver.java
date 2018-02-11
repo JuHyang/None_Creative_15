@@ -100,7 +100,7 @@ public class GradeAlarmReceiver extends BroadcastReceiver {
 
     public void GenerateNotification (Context context, String message) {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 , new Intent(context, GradeNowActivity.class),
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 , new Intent(context, MainActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(context);
         builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));

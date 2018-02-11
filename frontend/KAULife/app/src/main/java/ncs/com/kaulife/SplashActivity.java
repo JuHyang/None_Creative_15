@@ -30,13 +30,6 @@ public class SplashActivity extends Activity {
         actionBar.hide();
 
         SelectActivity();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        }, 3000);
     }
 
     public void SelectActivity () {
@@ -69,7 +62,7 @@ public class SplashActivity extends Activity {
             public void onResponse(Call<String> call, Response<String> response) {
                 String result = response.body();
                 if (result.equals("1")) {
-                    Intent intent = new Intent (getApplicationContext(), MenuActivity.class);
+                    Intent intent = new Intent (getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
                 } else if (result.equals("0")) {
