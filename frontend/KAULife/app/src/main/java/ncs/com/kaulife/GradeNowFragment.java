@@ -62,8 +62,6 @@ public class GradeNowFragment extends Fragment{
     public void InitModel() {
         loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
         gradeDatas = (ArrayList) GradeData.listAll(GradeData.class);
-
-
     }
 
     public void InitView (View view) {
@@ -92,14 +90,10 @@ public class GradeNowFragment extends Fragment{
 
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
-        if (loginDatas.size() == 0) {
-//            Intent intent = getIntent();
-//            studentNum = intent.getStringExtra("id");
-//            password = intent.getStringExtra("password");
-        } else {
-            studentNum = loginDatas.get(0).studentNum;
-            password = loginDatas.get(0).password;
-        }
+
+        studentNum = loginDatas.get(0).studentNum;
+        password = loginDatas.get(0).password;
+
 
         ServerInterface serverInterface = new Repo().getService();
         Call<ArrayList<GradeData>> c = serverInterface.GetGradeNow(studentNum, password);

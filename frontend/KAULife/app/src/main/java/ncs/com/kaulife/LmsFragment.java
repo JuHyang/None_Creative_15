@@ -49,6 +49,7 @@ public class LmsFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_lms, container, false);
         InitModel();
         InitView(layout);
+        GetLmsData(loginData, auto);
         AboutView();
         return layout;
     }
@@ -57,7 +58,6 @@ public class LmsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         InitModel();
-        GetLmsData(loginData, auto);
         AboutView();
     }
 
@@ -82,21 +82,25 @@ public class LmsFragment extends Fragment {
         lmsDatas = (ArrayList) LmsData.listAll(LmsData.class);
 
         Collections.reverse(lmsDatas);
+        lmsDatas.add(new LmsData("웹 스튜디오", "마감 5월 6일 오후6:00", "[과제] 기획서 제출"));
+        lmsDatas.add(new LmsData("소프트웨어 공학", "5월 1일 오후1:20", "[포럼] 링크 알림"));
+        lmsDatas.add(new LmsData("웹 스튜디오", "마감 5월 6일 오후6:00", "[과제] 기획서 제출"));
+        lmsDatas.add(new LmsData("소프트웨어 공학", "5월 1일 오후1:20", "[포럼] 링크 알림"));
         loginData = loginDatas.get(0);
         auto = true;
     }
 
     public void GetLmsData(LoginData loginData, final Boolean auto) {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-        final ProgressDialog dialog = ProgressDialog.show(context, "", "잠시만 기다려주세요", true, true);
-        dialog.setCancelable(false);
-        dialog.show();
+//        final ProgressDialog dialog = ProgressDialog.show(context, "", "잠시만 기다려주세요", true, true);
+//        dialog.setCancelable(false);
+//        dialog.show();
         ServerInterface serverInterface = new Repo().getService();
         Call<ArrayList<LmsData>> c = serverInterface.GetLmsData(loginData.studentNum, loginData.password);
         c.enqueue(new Callback<ArrayList<LmsData>>() {
             @Override
             public void onResponse(Call<ArrayList<LmsData>> call, Response<ArrayList<LmsData>> response) {
-                dialog.dismiss();
+//                dialog.dismiss();
                 ArrayList<LmsData> lmsDataTemp = response.body();
                 if (lmsDataTemp.size() != 0) {
                     for (int i = 0; i < lmsDataTemp.size(); i++) {
@@ -110,6 +114,9 @@ public class LmsFragment extends Fragment {
                             }
                         }
                         if (status == 1) {
+                            if (receiveData.content.contains("[과제]")) {
+                                receiveData.time = "마감 " + receiveData.time;
+                            }
                             lmsDatas.add(0, receiveData);
                             lmsAdapter.notifyDataSetChanged();
                             if (auto) {
@@ -122,7 +129,7 @@ public class LmsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ArrayList<LmsData>> call, Throwable t) {
-                dialog.dismiss();
+//                dialog.dismiss();
                 alertDialogBuilder.setMessage("서버에 오류가 있습니다. 잠시 후 다시 시도해주세요")
                         .setCancelable(false)
                         .setNegativeButton("확인",

@@ -32,7 +32,6 @@ import retrofit2.Response;
 public class LoginActivity extends Activity {
     private EditText editTextId;
     private EditText editTextPwd;
-    private Switch switchAuto;
     private Button btnLogin;
     private ArrayList<LoginData> loginDatas;
 
@@ -55,7 +54,6 @@ public class LoginActivity extends Activity {
     public void initView () {
         editTextId = findViewById(R.id.editTextId);
         editTextPwd = findViewById(R.id.editTextPwd);
-        switchAuto = findViewById(R.id.switchAuto);
         btnLogin = findViewById(R.id.btnLogin);
     }
 
@@ -65,7 +63,7 @@ public class LoginActivity extends Activity {
             public void onClick(View v) {
                 String studentNum = editTextId.getText().toString();
                 String password = editTextPwd.getText().toString();
-                Boolean auto = switchAuto.isChecked();
+                Boolean auto = true;
 
                 LoginData loginData = new LoginData(studentNum, password, false, false);
                 LoginCheck(loginData, auto);

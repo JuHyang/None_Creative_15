@@ -2,7 +2,9 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">@color/holo_light_primary</item>
         <!-- Customize your theme here. -->
     </style>
+
 
 </resources>

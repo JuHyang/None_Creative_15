@@ -30,8 +30,6 @@ public class ScheduleTableFragment extends Fragment {
     private ArrayList<ScheduleTableData> scheduleTableDatas = new ArrayList<>();
     private ArrayList<ScheduleData> scheduleDatas;
 
-    private Button btn_TableRefresh;
-
     private ArrayList<Integer> colors = new ArrayList<>();
 
     public ScheduleTableFragment (Context context) {
@@ -58,7 +56,6 @@ public class ScheduleTableFragment extends Fragment {
     }
 
     public void InitView (View view) {
-        btn_TableRefresh = view.findViewById(R.id.btn_TableRefresh);
         timeTableView = view.findViewById(R.id.tableRecyclerView);
         timeTableView.setLayoutManager(new GridLayoutManager(context, 6));
 
@@ -154,31 +151,6 @@ public class ScheduleTableFragment extends Fragment {
     }
 
     public void AboutView () {
-        btn_TableRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setTitle("초기화")
-                        .setMessage("시간표를 초기화 하시겠습니까 ?")
-                        .setPositiveButton("삭제",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        ScheduleData.deleteAll(ScheduleData.class);
-                                        InitModel();
-                                        scheduleTableAdapter.notifyDataSetChanged();
-                                    }
-                                })
-                        .setNegativeButton("취소",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {}
-                                });
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-            }
-        });
-
         timeTableView.addOnItemTouchListener(new RecyclerItemClickListener(context, timeTableView,
                 new RecyclerItemClickListener.OnItemClickListener() {
                     @Override

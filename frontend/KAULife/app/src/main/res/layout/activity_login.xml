@@ -60,15 +60,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Switch
-                android:id="@+id/switchAuto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="자동로그인"
-                tools:layout_editor_absoluteX="98dp"
-                tools:layout_editor_absoluteY="479dp" />
-
             <Button
                 android:background="#c5405b"
                 android:textColor="#ffffff"

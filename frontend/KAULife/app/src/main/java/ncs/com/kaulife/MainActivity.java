@@ -1,6 +1,9 @@
 package ncs.com.kaulife;
 
+import android.app.ActionBar;
 import android.app.Fragment;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         InitView();
     }
 
@@ -60,17 +64,17 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new ScheduleMajorFragment(MainActivity.this);
                     args = new Bundle();
                     break;
-//                case 4:
-//                    fragment = new ScheduleMajorFragment(MainActivity.this);
-//                    args = new Bundle();
-//                    break;
+                case 4:
+                    fragment = new SettingFragment(MainActivity.this);
+                    args = new Bundle();
+                    break;
             }
             return fragment;
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 5;
         }
 
         @Override
@@ -89,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
                     return "시간표";
                 case 3:
                     return "시간표 만들기";
-//                case 4:
-//                    return"5";
+                case 4:
+                    return"설정";
                 default :
                     return null;
             }
