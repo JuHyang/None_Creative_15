@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -29,6 +32,8 @@ public class ScheduleTableFragment extends Fragment {
     private RecyclerView.Adapter scheduleTableAdapter;
     private ArrayList<ScheduleTableData> scheduleTableDatas = new ArrayList<>();
     private ArrayList<ScheduleData> scheduleDatas;
+
+    private TextView textViewSubjectTable, textViewProfessorTable, textViewTimeTable, textViewRoomTable;
 
     private ArrayList<Integer> colors = new ArrayList<>();
 
@@ -156,47 +161,17 @@ public class ScheduleTableFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, final int position) {
                         if (!scheduleTableDatas.get(position).subject.equals("") && !scheduleTableDatas.get(position).subject.equals(" ")) {
-                            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                            alertDialogBuilder.setTitle("삭제")
-                                    .setMessage(scheduleTableDatas.get(position).subject + "를 시간표에서 삭제 하시겠습니까 ?")
-                                    .setPositiveButton("확인",
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    String subjectTarget = scheduleTableDatas.get(position).subject;
-                                                    int colorTarget = scheduleTableDatas.get(position).color;
-                                                    for (int i = 0; i < scheduleDatas.size(); i++) {
-                                                        ScheduleData temp = scheduleDatas.get(i);
-                                                        if (temp.subject.equals(subjectTarget)) {
-                                                            temp.delete();
-                                                            scheduleDatas.remove(temp);
-                                                            break;
-                                                        }
-                                                    }
-                                                    for (int i = 0; i < scheduleTableDatas.size(); i++) {
-                                                        ScheduleTableData temp = scheduleTableDatas.get(i);
-                                                        if (temp.color == colorTarget) {
-                                                            temp.subject = "";
-                                                            temp.room = "";
-                                                            temp.professor = "";
-                                                            temp.color = Color.rgb(240,240,240);
-                                                        }
-                                                    }
-                                                    scheduleTableAdapter.notifyDataSetChanged();
-                                                }
-                                            })
-                                    .setNegativeButton("취소",
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                }
-                                            });
-                            AlertDialog alertDialog = alertDialogBuilder.create();
-                            alertDialog.show();
+                            String subjectTarget = scheduleTableDatas.get(position).subject;
+                            int colorTarget = scheduleTableDatas.get(position).color;
+                            for (int i = 0; i < scheduleDatas.size(); i++) {
+                                ScheduleData temp = scheduleDatas.get(i);
+                                if (temp.subject.equals(subjectTarget)) {
+                                    openDialog(temp, colorTarget);
+                                    break;
+                                }
+                            }
                         }
                     }
-
                     @Override
                     public void onLongItemClick(View view, int position) {
 
@@ -204,6 +179,64 @@ public class ScheduleTableFragment extends Fragment {
                 }));
     }
 
+    public void openDialog (final ScheduleData temp, final int colorTarget) {
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View dialogLayout = layoutInflater.inflate(R.layout.dialog_table_edit, null);
+
+        textViewSubjectTable = dialogLayout.findViewById(R.id.textViewSubjectTable);
+        textViewProfessorTable = dialogLayout.findViewById(R.id.textViewProfessorTable);
+        textViewTimeTable = dialogLayout.findViewById(R.id.textViewTimeTable);
+        textViewRoomTable = dialogLayout.findViewById(R.id.textViewRoomTable);
+
+        textViewSubjectTable.setText("과목명 : " + temp.subject);
+        textViewProfessorTable.setText("주담당 교수 : " + temp.professor);
+        textViewTimeTable.setText("교시 : " + temp.time);
+        textViewRoomTable.setText("강의실 : " + temp.room);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setNeutralButton("삭제", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                temp.delete();
+                scheduleDatas.remove(temp);
+
+                for (int i = 0; i < scheduleTableDatas.size(); i++) {
+                    ScheduleTableData temp = scheduleTableDatas.get(i);
+                    if (temp.color == colorTarget) {
+                        temp.subject = "";
+                        temp.room = "";
+                        temp.professor = "";
+                        temp.color = Color.rgb(240,240,240);
+                    }
+                }
+                InitModel();
+                scheduleTableAdapter.notifyDataSetChanged();
+            }
+        });
+
+        builder.setNegativeButton("수정", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent (context, ScheduleEditActivity.class);
+                intent.putExtra("subject", temp.subject);
+                startActivity(intent);
+            }
+        });
+
+        builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.setTitle("확인");
+        builder.setView(dialogLayout);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
 
 
 }

@@ -1,32 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F0F0F0">
 
+    <TextView
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:gravity="center_horizontal"
+        android:id="@+id/textViewSemesterNow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="textViewSemesterNow" />
 
     <LinearLayout
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:layout_marginTop="15dp"
+        android:id="@+id/LinearLayoutFirst"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
-            android:gravity="center_horizontal"
-            android:id="@+id/textViewSemesterNow"
-            android:layout_width="match_parent"
+            android:gravity="center"
+            android:background="#a5a5a5"
+            android:textColor="#ffffff"
+            android:id="@+id/textViewSubjectNow"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="textViewSemesterNow" />
+            android:text="과목" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/gradeNowRecyclerView"
-            android:scrollbars="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        <TextView
+            android:gravity="center"
+            android:background="#a5a5a5"
+            android:textColor="#ffffff"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="학점" />
+
+        <TextView
+            android:gravity="center"
+            android:background="#a5a5a5"
+            android:textColor="#ffffff"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="성적" />
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/gradeNowRecyclerView"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:gravity="center"
+            android:background="#a5a5a5"
+            android:textColor="#ffffff"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="평점평균" />
+
+        <TextView
+            android:id="@+id/textViewGradeTotal"
+            android:gravity="center"
+            android:background="#a5a5a5"
+            android:textColor="#ffffff"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="성적" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:gravity="center"
+            android:background="#a5a5a5"
+            android:textColor="#ffffff"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="학년 석차" />
+
+        <TextView
+            android:id="@+id/textViewRankingTotal"
+            android:gravity="center"
+            android:background="#a5a5a5"
+            android:textColor="#ffffff"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="석차" />
+    </LinearLayout>
+
+</LinearLayout>

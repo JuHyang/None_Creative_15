@@ -14,13 +14,6 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
-
-        <Button
-            android:id="@+id/btn_TableRefresh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="시간표 초기화" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/tableRecyclerView"
             android:layout_width="match_parent"

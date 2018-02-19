@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F0F0"
+    tools:context="ncs.com.kaulife.ScheduleEditActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:textSize="20dp"
+            android:textColor="#000000"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:layout_marginBottom="30dp"
+            android:id="@+id/textViewEditActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시간표 및 강의실 수정" />
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="시간 : " />
+
+            <Spinner
+                android:textSize="15dp"
+                android:backgroundTint="#000000"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerDayFirst"/>
+
+            <Spinner
+                android:backgroundTint="#000000"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerTimeFirstStart"/>
+
+            <TextView
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="∼" />
+
+            <Spinner
+                android:backgroundTint="#000000"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerTimeFirstEnd"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="강의실 : " />
+
+            <EditText
+                android:backgroundTint="#000000"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/editTextRoomFirst"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4"
+                android:text="room" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textSize="15dp"
+                android:id="@+id/textViewTimeSecond"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="시간 : " />
+
+            <Spinner
+                android:backgroundTint="#000000"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerDaySecond"/>
+
+            <Spinner
+                android:backgroundTint="#000000"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerTimeSecondStart"/>
+
+            <TextView
+                android:textSize="15dp"
+                android:id="@+id/textViewTempSecond"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="∼" />
+
+            <Spinner
+                android:backgroundTint="#000000"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinnerTimeSecondEnd"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textSize="15dp"
+                android:id="@+id/textViewRoomSecond"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="강의실 : " />
+
+            <EditText
+                android:backgroundTint="#000000"
+                android:textSize="15dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:id="@+id/editTextRoomSecond"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="4"
+                android:text="room" />
+
+        </LinearLayout>
+
+        <Button
+            android:background="#F0F0F0"
+            android:textColor="#000000"
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="저장"/>
+
+    </LinearLayout>
+
+
+
+
+</android.support.constraint.ConstraintLayout>

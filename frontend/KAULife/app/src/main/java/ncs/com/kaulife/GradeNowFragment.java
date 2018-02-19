@@ -35,7 +35,7 @@ public class GradeNowFragment extends Fragment{
     private RecyclerView gradeNowRecyclerView;
     private RecyclerView.Adapter gradeNowAdapter;
     private RecyclerView.LayoutManager gradeNowLayoutManager;
-    private TextView textViewSemesterNow;
+    private TextView textViewSemesterNow, textViewGradeTotal, textViewRankingTotal;
 
     public GradeNowFragment (Context context) {
         this.context = context;
@@ -78,18 +78,74 @@ public class GradeNowFragment extends Fragment{
         gradeNowRecyclerView.setAdapter(gradeNowAdapter);
 
         textViewSemesterNow = view.findViewById(R.id.textViewSemesterNow);
+        textViewGradeTotal = view.findViewById(R.id.textViewGradeTotal);
+        textViewRankingTotal = view.findViewById(R.id.textViewRankingTotal);
     }
 
     public void AboutView () {
         if (gradeDatas.size() != 0) {
             textViewSemesterNow.setText(gradeDatas.get(0).hakgi);
+            if (gradeDatas.get(0).ranking != 0) {
+                textViewRankingTotal.setText(String.valueOf(gradeDatas.get(0).ranking));
+            } else {
+                textViewRankingTotal.setText("");
+            }
+
+            float totalGrade = 0;
+            int totalCredit = 0;
+            int status = 0;
+            for (int i = 0; i < gradeDatas.size(); i ++) {
+                float gradeMid = 0;
+                GradeData temp = gradeDatas.get(i);
+                if (temp.grade.equals("")) {
+                    textViewGradeTotal.setText("");
+                    status = 1;
+                    break;
+                }
+                if (temp.grade.equals("P") || temp.grade.equals("NP")) {
+                    continue;
+                }
+                totalCredit += temp.credit;
+                if (temp.grade.equals("A+")) {
+                    gradeMid = (float) 4.5;
+                } else if (temp.grade.equals("A0")) {
+                    gradeMid = (float) 4.0;
+                } else if (temp.grade.equals("B+")) {
+                    gradeMid = (float) 3.5;
+                } else if (temp.grade.equals("B0")) {
+                    gradeMid = (float) 3.0;
+                } else if (temp.grade.equals("C+")) {
+                    gradeMid = (float) 2.5;
+                } else if (temp.grade.equals("C0")) {
+                    gradeMid = (float) 2.0;
+                } else if (temp.grade.equals("D+")) {
+                    gradeMid = (float) 1.5;
+                } else if (temp.grade.equals("D0")) {
+                    gradeMid = (float) 1.0;
+                } else if (temp.grade.equals("F")) {
+                    gradeMid = (float) 0;
+                }
+
+                totalGrade += temp.credit * gradeMid;
+
+            }
+
+            totalGrade /= totalCredit;
+
+            if (status != 1) {
+                textViewRankingTotal.setText(String.format("%.2f", totalGrade));
+            }
+
+
+        } else {
+            textViewSemesterNow.setText("이번학기에 수강중인 과목이 없습니다");
+            textViewGradeTotal.setText("");
+            textViewRankingTotal.setText("");
         }
     }
 
     public void GetGradeData() {
-
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-
 
         studentNum = loginDatas.get(0).studentNum;
         password = loginDatas.get(0).password;
@@ -103,16 +159,7 @@ public class GradeNowFragment extends Fragment{
             public void onResponse(Call<ArrayList<GradeData>> call, Response<ArrayList<GradeData>> response) {
                 if (gradeDatas.size() == 0) {
                     if (response.body().size() == 0) {
-//                        alertDialogBuilder.setMessage("이번학기에 수강중인 과목이 없습니다.") // textView 로 변경
-//                                .setCancelable(false)
-//                                .setNegativeButton("확인",
-//                                        new DialogInterface.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(DialogInterface dialog, int which) {
-//                                            }
-//                                        });
-//                        AlertDialog alertDialog = alertDialogBuilder.create();
-//                        alertDialog.show();
+
                     } else {
                         gradeDatas.addAll(response.body());
                         for (int i = 0; i < gradeDatas.size(); i ++) {
@@ -123,16 +170,6 @@ public class GradeNowFragment extends Fragment{
                     }
                 } else {
                     if (response.body().size() == 0) {
-//                        alertDialogBuilder.setMessage("이번학기에 수강중인 과목이 없습니다.")// textView 로 변경
-//                                .setCancelable(false)
-//                                .setNegativeButton("확인",
-//                                        new DialogInterface.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(DialogInterface dialog, int which) {
-//                                            }
-//                                        });
-//                        AlertDialog alertDialog = alertDialogBuilder.create();
-//                        alertDialog.show();
                     }
                     else {
                         if (gradeDatas.size() != response.body().size() || !(gradeDatas.get(0).hakgi.equals(response.body().get(0).hakgi))) {

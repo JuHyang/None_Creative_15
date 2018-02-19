@@ -81,11 +81,12 @@ public class LmsFragment extends Fragment {
         loginDatas = (ArrayList) LoginData.listAll(LoginData.class);
         lmsDatas = (ArrayList) LmsData.listAll(LmsData.class);
 
+        if (lmsDatas.size() == 0) {
+            lmsDatas.add(new LmsData("", "", "알림 정보가 없습니다"));
+        }
+
         Collections.reverse(lmsDatas);
-        lmsDatas.add(new LmsData("웹 스튜디오", "마감 5월 6일 오후6:00", "[과제] 기획서 제출"));
-        lmsDatas.add(new LmsData("소프트웨어 공학", "5월 1일 오후1:20", "[포럼] 링크 알림"));
-        lmsDatas.add(new LmsData("웹 스튜디오", "마감 5월 6일 오후6:00", "[과제] 기획서 제출"));
-        lmsDatas.add(new LmsData("소프트웨어 공학", "5월 1일 오후1:20", "[포럼] 링크 알림"));
+
         loginData = loginDatas.get(0);
         auto = true;
     }
@@ -103,6 +104,10 @@ public class LmsFragment extends Fragment {
 //                dialog.dismiss();
                 ArrayList<LmsData> lmsDataTemp = response.body();
                 if (lmsDataTemp.size() != 0) {
+                    if (lmsDatas.get(0).content.equals("알림 정보가 없습니다")) {
+                        lmsDatas.clear();
+                    }
+
                     for (int i = 0; i < lmsDataTemp.size(); i++) {
                         int status = 1;
                         LmsData receiveData = lmsDataTemp.get(i);

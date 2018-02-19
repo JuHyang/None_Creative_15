@@ -1,13 +1,10 @@
 package ncs.com.kaulife;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -27,7 +24,7 @@ public class ScheduleTableAdapter extends RecyclerView.Adapter<ScheduleTableAdap
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.table_recyclerview, parent, false);
+                .inflate(R.layout.recyclerview_schedule_table, parent, false);
         // set the view's size, margins, paddings and layout parameters
 
         ViewHolder vh = new ViewHolder(v);
