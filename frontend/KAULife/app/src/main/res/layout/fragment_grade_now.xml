@@ -51,9 +51,10 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:layout_gravity="center"
         android:id="@+id/gradeNowRecyclerView"
         android:scrollbars="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"/>
 
     <LinearLayout

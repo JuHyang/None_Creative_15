@@ -8,9 +8,6 @@
     android:layout_height="match_parent"
     android:background="#F0F0F0">
 
-
-
-
     <LinearLayout
         android:gravity="center_horizontal"
         android:layout_width="match_parent"

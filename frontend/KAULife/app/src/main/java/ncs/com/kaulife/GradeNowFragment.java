@@ -133,7 +133,7 @@ public class GradeNowFragment extends Fragment{
             totalGrade /= totalCredit;
 
             if (status != 1) {
-                textViewRankingTotal.setText(String.format("%.2f", totalGrade));
+                textViewGradeTotal.setText(String.format("%.2f", totalGrade));
             }
 
 

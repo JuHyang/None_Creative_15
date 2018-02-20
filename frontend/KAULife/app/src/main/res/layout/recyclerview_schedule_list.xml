@@ -12,7 +12,7 @@
         android:id="@+id/LinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="10dp"
         android:orientation="horizontal"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -21,62 +21,62 @@
 
         <TextView
             android:id="@+id/textViewSubjectList"
-            android:textSize="15dp"
-            android:layout_width="200dp"
+            android:textSize="10sp"
+            android:layout_width="50sp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:textColor="@android:color/black"
             android:text="과목" />
 
         <TextView
+            android:layout_marginLeft="5dp"
             android:id="@+id/textViewCategoryList"
-            android:textSize="15dp"
-            android:layout_width="30dp"
+            android:textSize="10sp"
+            android:layout_width="20sp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:textColor="@android:color/black"
             android:text="이수" />
 
         <TextView
+            android:layout_marginLeft="5dp"
             android:id="@+id/textViewCreditList"
-            android:textSize="15dp"
-            android:layout_width="20dp"
+            android:textSize="10sp"
+            android:layout_width="10sp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:textColor="@android:color/black"
             android:text="학점" />
 
         <TextView
+            android:layout_marginLeft="20dp"
             android:id="@+id/textViewProfessorList"
-            android:textSize="15dp"
-            android:layout_width="60dp"
+            android:textSize="10sp"
+            android:layout_width="30sp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:textColor="@android:color/black"
             android:text="교수" />
 
         <TextView
+            android:layout_marginLeft="5dp"
             android:id="@+id/textViewTimeList"
-            android:textSize="15dp"
-            android:layout_width="200dp"
+            android:textSize="10sp"
+            android:layout_width="120sp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:textColor="@android:color/black"
             android:text="시간" />
 
         <TextView
+            android:layout_marginLeft="5dp"
             android:id="@+id/textViewRoomList"
-            android:textSize="15dp"
-            android:layout_width="90dp"
+            android:textSize="10sp"
+            android:layout_width="40sp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
             android:textColor="@android:color/black"
             android:text="강의실" />
 
         <TextView
+            android:layout_marginLeft="5dp"
             android:id="@+id/textViewTargetList"
-            android:textSize="15dp"
-            android:layout_width="60dp"
+            android:textSize="10sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:text="" />

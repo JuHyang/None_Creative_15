@@ -8,34 +8,37 @@
     android:id="@+id/tableView">
 
     <LinearLayout
-        android:layout_width="70sp"
+        android:layout_width="52sp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp">
 
         <TextView
+            android:gravity="center"
             android:id="@+id/textViewSubject_table"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="textViewSubject_table"
+            android:text="aa"
             android:textColor="@android:color/black"
-            android:textSize="10sp"/>
+            android:textSize="8sp"/>
 
         <TextView
+            android:gravity="center"
             android:id="@+id/textViewProfessor_table"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="textViewProfessor_table"
+            android:text="bb"
             android:textColor="@android:color/black"
-            android:textSize="10sp"/>
+            android:textSize="8sp"/>
 
         <TextView
+            android:gravity="center"
             android:id="@+id/textViewRoom_table"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="textViewRoom_table"
+            android:text="cc"
             android:textColor="@android:color/black"
-            android:textSize="10sp"/>
+            android:textSize="8sp"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
