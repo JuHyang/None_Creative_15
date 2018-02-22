@@ -96,7 +96,7 @@ public class LmsAlarmReceiver extends BroadcastReceiver {
 
     public void GenerateNotification (Context context, String message) {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 , new Intent (context, MainActivity.class),
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0 , new Intent (context, SplashActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(context);
         builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));

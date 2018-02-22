@@ -176,7 +176,7 @@ public class SettingFragment extends Fragment {
         Intent intent = new Intent (context, GradeAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1, intent, 0);
 
-        gradeAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 3600000, pendingIntent);
+        gradeAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 60000, 3600000, pendingIntent);
 //        gradeAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 10000, pendingIntent);
     }
 

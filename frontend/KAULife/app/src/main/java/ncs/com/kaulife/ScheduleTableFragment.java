@@ -141,8 +141,11 @@ public class ScheduleTableFragment extends Fragment {
                     if (k == 0) {
                         scheduleTableDatatemp.subject = scheduleDatas.get(i).subject;
                         scheduleTableDatatemp.professor = scheduleDatas.get(i).professor;
-                        if (!(room_arr[0].equals(""))) {
-                            scheduleTableDatatemp.room = room_arr[j];
+                        if (room_arr.length > j) {
+                            if (!(room_arr[j].equals(""))) {
+                                scheduleTableDatatemp.room = room_arr[j];
+                            }
+
                         }
                     } else {
                         scheduleTableDatatemp.subject = " ";

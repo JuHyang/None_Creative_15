@@ -184,7 +184,7 @@ public class ScheduleEditActivity extends AppCompatActivity {
             textViewTempSecond.setVisibility(View.GONE);
             textViewRoomSecond.setVisibility(View.GONE);
         } else {
-            if (!targetData.room.equals("")) {
+            if (!targetData.room.equals("") && room_arr.length > 1) {
                 editTextRoomSecond.setText(room_arr[1]);
             } else {
                 editTextRoomSecond.setText("");
