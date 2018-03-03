@@ -104,12 +104,13 @@ public class SettingFragment extends Fragment {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        AlarmLmsCancel();
+                                        AlarmGradeCancel();
                                         LoginData.deleteAll(LoginData.class);
                                         LmsData.deleteAll(LmsData.class);
                                         ScheduleData.deleteAll(ScheduleData.class);
                                         Intent intent = new Intent (context, LoginActivity.class);
                                         startActivity(intent);
-                                        AlarmLmsCancel();
                                         getActivity().finish();
                                     }
                                 })
